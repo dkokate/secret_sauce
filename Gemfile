@@ -10,6 +10,7 @@ end
 group :test do
   gem 'selenium-webdriver', '2.35.0'
   gem 'capybara', '2.1.0'
+  gem 'launchy', '2.3.0'
 end
 
 gem 'sass-rails', '4.0.0.rc2'

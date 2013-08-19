@@ -1,6 +1,9 @@
 SecretSauce::Application.routes.draw do
   get "secret_sauce_pages/home"
   get "secret_sauce_pages/help"
+  get "secret_sauce_pages/about"
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
