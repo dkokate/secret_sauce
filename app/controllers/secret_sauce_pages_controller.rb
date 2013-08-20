@@ -1,4 +1,5 @@
 class SecretSaucePagesController < ApplicationController
+  
   def home
   end
 

@@ -9,9 +9,14 @@ describe "Secret Sauce pages" do
     
     it "should have the title 'Home'" do 
       visit '/secret_sauce_pages/home' 
-      expect(page).to have_title("Secret Sauce | Home")
+      expect(page).to have_title("Secret Sauce")
       # save_and_open_page
     end 
+    
+    it "should not have custom page title" do
+      visit '/secret_sauce_pages/home' 
+      expect(page).not_to have_title("| Home")
+    end
     
   end
   
