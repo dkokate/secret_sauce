@@ -1,7 +1,18 @@
 SecretSauce::Application.routes.draw do
-  get "secret_sauce_pages/home"
-  get "secret_sauce_pages/help"
-  get "secret_sauce_pages/about"
+  get "users/new"
+  
+  match '/signup', to: 'users#new', via: 'get'
+  
+  
+  root 'secret_sauce_pages#home'
+  match '/home', to: 'secret_sauce_pages#home', via: 'get'
+  match '/secret_sauce_pages/home', to: 'secret_sauce_pages#home', via: 'get'
+  
+  match '/secret_sauce_pages/help', to: 'secret_sauce_pages#help', via: 'get'
+  match '/help', to: 'secret_sauce_pages#help', via: 'get'
+  
+  match '/about', to: 'secret_sauce_pages#about', via: 'get'
+  match '/contact', to: 'secret_sauce_pages#contact', via: 'get'
   
   
   # The priority is based upon order of creation: first created -> highest priority.
