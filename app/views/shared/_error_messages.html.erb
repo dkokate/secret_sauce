@@ -1,0 +1,8 @@
+<% if @user.errors.any? %>
+  <div id="error_explaination">
+    <div class="offset1 alert alert-error">
+      Oops! The form has <%= pluralize(@user.errors.count, "error") %>
+    </div>
+  </div>
+<% end %>
+

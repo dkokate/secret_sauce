@@ -4,6 +4,7 @@ gem 'rails', '4.0.0.rc2'
 gem 'pg', '0.15.1'
 gem 'bootstrap-sass', '2.3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
+gem "simple_form", "3.0.0.rc"
 
 group :development, :test do
   gem 'sqlite3', '1.3.7'
@@ -14,6 +15,7 @@ group :test do
   gem 'selenium-webdriver', '2.35.0'
   gem 'capybara', '2.1.0'
   gem 'launchy', '2.3.0'
+  gem 'factory_girl_rails', '4.2.1'
 end
 
 gem 'sass-rails', '4.0.0.rc2'
