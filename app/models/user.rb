@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, 
                     format: { with: VALID_EMAIL_REGEX}, 
                     uniqueness: {case_sensitive: false}
-  validates :password, length: {minimum: 6}
+  validates :password, length: {minimum: 6} 
   has_secure_password
   
   def User.new_remember_token
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
     def  create_remember_token
       begin
         self.remember_token = User.encrypt(User.new_remember_token)
-      end  while self.class.exists?(remember_token: remember_token) 
+      end while self.class.exists?(remember_token: remember_token) 
       # while... to ensure remember_token doesn't exist refer to Railscast episode# 352
     end
 end
