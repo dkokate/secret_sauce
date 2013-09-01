@@ -1,8 +1,10 @@
 SecretSauce::Application.routes.draw do
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
   
   match '/signup', to: 'users#new', via: 'get'
-  
+  match '/signin', to: 'sessions#new', via: 'get'
+  match '/signout', to: 'sessions#destroy', via: 'delete'
   
   root 'secret_sauce_pages#home'
   match '/home', to: 'secret_sauce_pages#home', via: 'get'

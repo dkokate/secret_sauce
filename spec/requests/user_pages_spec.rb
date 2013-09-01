@@ -29,7 +29,7 @@ describe "User pages" do
       describe "after submission" do
         it {should have_title('Sign up')}
         describe " should show error messages" do
-          pending("example not ready")
+          pending(": submission example not ready")
           # it {should have_content('error')}
         end
       end
