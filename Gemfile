@@ -5,6 +5,9 @@ gem 'pg', '0.15.1'
 gem 'bootstrap-sass', '2.3.2.1'
 gem 'bcrypt-ruby', '3.0.1'
 gem "simple_form", "3.0.0.rc"
+gem 'faker', '1.2.0'
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', :git => 'git://github.com/yrgoldteeth/bootstrap-will_paginate.git'
 
 group :development, :test do
   gem 'sqlite3', '1.3.7'

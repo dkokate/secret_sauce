@@ -11,3 +11,17 @@ include ApplicationHelper
 #     "#{base_title} | #{page_title}"
 #   end
 # end
+
+def sign_in(user, options={} )
+  if options[:no_capybara]
+    # Sign in when not using Capybara
+    unencrypted_remember_token = User.new_remember_token
+    cookies[:remember_token] = unencrypted_remember_token
+    user.update_attribute(:remember_token, User.encrypt(unencrypted_remember_token))
+  else
+    visit signin_path
+    fill_in "session_email", with: user.email 
+    fill_in "session_password", with: user.password
+    click_button "Sign in"
+  end
+end

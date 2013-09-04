@@ -1,0 +1,28 @@
+<% provide(:title, "Gotu Chefs") %>
+<h1> The Gotu Chefs </h1>
+
+<ul class = "users">
+  <%= render @users %>
+</ul>
+<!-- 
+The above '<%= render @users %>' is a compact code for rendering users, where Rails infers that @users is a list of User objects and it automatically iterates through them and renders using '_user.html.erb' partial 
+
+Option 1:
+  <% @users.each do |user| %>
+    <li>
+      <%= gravatar_for user, size: 52 %>
+      <%= link_to user.name, user %>
+    </li>
+  <% end %>
+  
+  Option 2: Here rails automatically looks for '_user.html.erb' partial, the 'user' variable is the key |user|
+  <ul class="users">
+    <% @users.each do |user| %>
+      <%= render user %>
+    <% end %>
+  </ul>
+-->
+
+<%= will_paginate %>
+
+

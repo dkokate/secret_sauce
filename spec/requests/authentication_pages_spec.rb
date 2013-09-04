@@ -8,6 +8,10 @@ describe "Authentication" do
     
     it {should have_selector('h1', text: 'Sign in')} 
     it {should have_title(full_title('Sign in'))}
+  end
+  
+  describe "signin process" do
+    before { visit signin_path }
     
     describe "with invalid information" do
       before { click_button "Sign in" }
@@ -24,15 +28,18 @@ describe "Authentication" do
     
     describe "with valid information; after signing in" do
       let(:user) {FactoryGirl.create(:user)}
-      before do
-        fill_in "session_email", with: user.email.upcase 
-        fill_in "session_password", with: user.password
-        click_button "Sign in"
-      end
+      before { sign_in user } 
+      # sign_in helper in spec/support/utilities.rb (replaces following code)
+      # before do
+      #  fill_in "session_email", with: user.email.upcase 
+      #  fill_in "session_password", with: user.password
+      #  click_button "Sign in"
+      # end
       
       # pending(": valid info example not ready")
       it { should have_title(user.name) }
       it { should have_link('Recipes',  '#') }
+      it { should have_link("Gotu's",  href: users_path) }
       it { should have_link('Profile',     href: user_path(user)) }
       it { should have_link('Settings',    href: edit_user_path(user)) }
       it { should have_link('Sign out',   href: signout_path) }
@@ -41,9 +48,7 @@ describe "Authentication" do
       describe "followed by sign out" do 
         # pending(": signout example not ready")
         # before {click_link 'Sign out'}
-        # before { all(:xpath, '//a[text()="Sign out"]').first.click }
         # it { should have_link('Sign in')}
-      end
         describe ": sign out in Accounts drop down menu" do
           before { all(:xpath, '//a[text()="Sign out"]').first.click }
           it { should have_link('Sign in')}
@@ -53,6 +58,70 @@ describe "Authentication" do
           before { all(:xpath, '//a[text()="Sign out"]')[1].click } # Check the next 'Sign out' link
           it { should have_link('Sign in')}
         end
+      end
     end 
+  end
+  
+  describe "authorization" do
+    describe "for non-signed in users" do
+      let(:user) { FactoryGirl.create(:user)}
+      
+      describe "when attempting to visit a protected page" do
+        before do
+          visit edit_user_path(user)
+          sign_in user # sign_in helper in spec/support/utilities.rb 
+        end
+
+        describe "after signing in" do
+          it "should render the desired protected page" do 
+            expect(page).to have_title('Edit profile')
+          end
+        end
+      end
+      
+      describe "in Users controller" do
+        
+        describe "visiting the edit page" do
+          before { visit edit_user_path(user)}
+          it { should have_title('Sign in')}
+        end
+        
+        describe "submitting to the update action" do
+          before { patch user_path(user) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        
+        describe "visiting the index page" do
+          before { visit users_path}
+          it { should have_title('Sign in')}
+        end
+      end
+    end
+    describe "for wrong signed in user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      before { sign_in user, no_capybara: true }
+      
+      describe "visiting Users#edit page" do
+        before { visit edit_user_path(user) }
+        it { should_not have_title(full_title('Edit profile')) }
+      end
+      
+      describe "submitting a PATCH request to Users#update action" do
+        before { patch user_path(wrong_user) }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+    end
+    
+    describe "for non-admin signed user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin_user) { FactoryGirl.create(:user) }
+      before { sign_in non_admin_user, no_capybara: true }
+      
+      describe "submitting a DELETE request to Users#destroy action" do
+        before { delete user_path(user) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+    end
   end
 end

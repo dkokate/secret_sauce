@@ -14,9 +14,6 @@ describe "Secret Sauce pages" do
       click_link "Help"
       expect(page).to have_title(full_title('Help'))
 
-      # click_link "Sign In"
-      # expect(page).to have_title(full_title('Sign In'))
-
       click_link "About"
       expect(page).to have_title(full_title('About Us'))
 
@@ -38,10 +35,25 @@ describe "Secret Sauce pages" do
     
     it_should_behave_like "all Secret Sauce static pages"
     it {should_not have_title("| Home")} 
-    # click_link "Sign up now!"
-    # expect(page).to
     
-    # it {should have_content('Secret Sauce')} # it {should have_title(full_title('')) } # save_and_open_page 
+    describe "when user is not signed in" do
+      it { should have_link('Sign Up now!', href: signup_path) }
+      it { should have_link('Sign in', href: signin_path) }
+    end
+    
+    describe "when user is signed in" do
+      let(:user) { FactoryGirl.create(:user)}
+      before { sign_in user }
+      
+      it { should_not have_link('Sign Up now!') }
+      it { should_not have_link('Sign in') }
+      it { should have_link('Recipes',  '#') }
+      it { should have_link("Gotu's",  href: users_path) }
+      it { should have_link('Profile',     href: user_path(user)) }
+      it { should have_link('Settings',    href: edit_user_path(user)) }
+      it { should have_link('Sign out',   href: signout_path) }
+    end
+    
   end
   
   describe "Help page" do
@@ -72,6 +84,14 @@ describe "Secret Sauce pages" do
     it_should_behave_like "all Secret Sauce static pages"
     
     # it {should have_selector('h1', text: 'Contact')} # it {should have_title(full_title("Contact"))}
+  end
+  
+  describe "Sign in page" do
+    before {visit signin_path}
+    let(:heading) {'Sign in'}
+    let(:page_title) {'Sign in'}
+    
+    it_should_behave_like "all Secret Sauce static pages"
   end
   
 end
