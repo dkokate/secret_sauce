@@ -12,17 +12,25 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
+    if signed_in? 
+      redirect_to root_url, notice: "You have already signed up"
+    else
+       @user = User.new
+    end
   end
   
   def create
-    @user = User.new(user_params)
-    if @user.save
-      sign_in @user
-      flash[:success] = "Enjoy the Secret Sauce!"
-      redirect_to @user
+    if signed_in?
+      redirect_to root_url, notice: "You have already signed up"
     else
-      render 'new'
+      @user = User.new(user_params)
+      if @user.save
+        sign_in @user
+        flash[:success] = "Enjoy the Secret Sauce!"
+        redirect_to @user
+      else
+        render 'new'
+      end
     end
   end
   
@@ -52,7 +60,7 @@ class UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :password_reset_token)
   end
   
   def signed_in_user

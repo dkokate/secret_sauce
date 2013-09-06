@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       # Sign in the user & redirect to show page
-      sign_in(user)
+      sign_in(user, options = { :remember_me => params[:remember_me] })
       redirect_back_or user
     else
       # Create error message

@@ -8,7 +8,7 @@
         <%= gravatar_for @user%>
         <%= @user.name %>
       </h1>
-      <a href="http://gravatar.com/emails">change picture</a>
+      <%= link_to 'change picture', "http://gravatar.com/emails", id: "gravatar_link", target: '_blank' %>
     </section>
   </aside>
 </div>

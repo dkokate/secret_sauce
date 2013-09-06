@@ -41,4 +41,7 @@ RSpec.configure do |config|
   config.order = "random"
   
   config.include Capybara::DSL
+  
+  config.include(MailerMacros)
+  config.before(:each) { reset_email }
 end

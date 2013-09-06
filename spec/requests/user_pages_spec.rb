@@ -102,6 +102,30 @@ describe "User pages" do
         it { should_not have_link('Sign in', href: signin_path) }
       end
     end
+    
+    describe "for an already signed in user" do
+      describe "attempting to visit signup_path" do
+        let(:user) { FactoryGirl.create(:user) }
+        before do 
+          sign_in user 
+          visit signup_path
+        end
+        it { should have_selector('h1', text: "Secret Sauce") } 
+        it { should_not have_title("Sign up") }
+      end
+      describe "attempting to submit a User#create action" do
+        let(:params) do
+          { user: { name: "zx", email: "z@x.com", password: "foobar", password_confirmation: "foobar" } }
+        end
+        let(:some_user) { FactoryGirl.create(:user)}
+        before do 
+          sign_in some_user, no_capybara: true
+          post users_path, params
+        end  
+        specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
   end
   
   describe "edit" do

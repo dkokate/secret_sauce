@@ -1,6 +1,5 @@
 SecretSauce::Application.routes.draw do
-  resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  match '/password_reset', to: 'password_resets#new', via: 'get'
   
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
@@ -15,6 +14,10 @@ SecretSauce::Application.routes.draw do
   
   match '/about', to: 'secret_sauce_pages#about', via: 'get'
   match '/contact', to: 'secret_sauce_pages#contact', via: 'get'
+  
+  resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :password_resets, only: [:new, :create, :edit, :update]
   
   
   # The priority is based upon order of creation: first created -> highest priority.
