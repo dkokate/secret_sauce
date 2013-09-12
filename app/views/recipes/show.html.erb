@@ -1,0 +1,48 @@
+<%=provide(:title,'Recipe')%>
+
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @recipe.user%>
+        <%= @recipe.user.name %>
+      </h1>
+    </section>
+  </aside>
+  <div class="span8">
+    <div class="row">
+      <h1><%= @recipe.name %></h1>
+    </div> 
+    <div class="row">
+      <h2>Cooking Time: 30 mins | Calories: 100 | "Ganapati" favorite</h2>
+    </div>
+   </div>
+</div>
+<div class="row">
+  <div class="span4">
+    <h2></h2>
+    <div class="thumbnail"> <img src="http://placehold.it/300x300" alt="300X300"> </div>
+  </div>
+  <div class="span4">
+    <h2>Ingredients</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+  </div>
+  <div class="span4">
+    <h2>Instructions</h2>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+  </div>
+</div>
+
+<% if current_user?(@recipe.user) %>
+<div class="row">
+  <div class="offset4 span8 center">
+    <%= link_to "Edit Recipe", edit_recipe_path(@recipe), class: "btn btn-large btn-primary" %>
+    <!-- user_path(user), method: :delete, data: { confirm: "You sure?" } %> | -->
+    <%= link_to  "Delete Recipe", recipe_path(@recipe), method: :delete,
+                                         data: { confirm: "Are you sure you want to delete this recipe?" } %>
+  </div>
+</div>
+<% end %>
+
+
+

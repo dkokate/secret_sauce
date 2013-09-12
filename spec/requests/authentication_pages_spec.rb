@@ -97,6 +97,29 @@ describe "Authentication" do
           it { should have_title('Sign in')}
         end
       end
+      
+      describe "in Recipes controller" do
+        describe "submitting to the new action" do
+          before { get new_recipe_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submitting to the create action" do
+          before { post recipes_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submiiting to the update action" do
+          let(:recipe) { FactoryGirl.create(:recipe) }
+          before do 
+            recipe.name = "New Name"
+            patch recipe_path(recipe) 
+          end
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submiiting to the destroy action" do
+          before { delete recipe_path(FactoryGirl.create(:recipe)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
     end
     describe "for wrong signed in user" do
       let(:user) { FactoryGirl.create(:user) }
@@ -104,13 +127,41 @@ describe "Authentication" do
       before { sign_in user, no_capybara: true }
       
       describe "visiting Users#edit page" do
-        before { visit edit_user_path(user) }
-        it { should_not have_title(full_title('Edit profile')) }
+        before { get edit_user_path(wrong_user) }
+        specify { expect(response.body).not_to match(full_title('Edit profile')) }
+        specify { expect(response).to redirect_to(root_url) }
       end
       
       describe "submitting a PATCH request to Users#update action" do
         before { patch user_path(wrong_user) }
         specify { expect(response).to redirect_to(root_path) }
+      end
+      
+      describe "visiting Recipe#edit page" do
+        
+        let!(:correct_user_recipe) { FactoryGirl.create(:recipe, user: user) }
+        let!(:wrong_user_recipe) { FactoryGirl.create(:recipe, user: wrong_user) }
+        before do
+          sign_in user 
+          visit edit_recipe_path(wrong_user_recipe)
+        end
+        it {should_not have_title(full_title('Edit recipe'))}
+        it {should_not have_selector('h1', text: 'Edit Recipe')}
+        it { should have_selector('h3', text: "Recipe Feed") } # Home page for signed user shows Recipe Feed
+        # it {should have_selector('h1', text: 'Secret Sauce')}   # Chack for root url
+        specify { expect(current_path).to eq(root_path) }
+        # specify { expect(response).to redirect_to(root_url) } --- Doesn't work
+      end
+      
+      describe "submitting a DESTROY request to Recipe#destroy action" do
+        
+        let!(:correct_user_recipe) { FactoryGirl.create(:recipe, user: user) }
+        let!(:some_user_recipe) { FactoryGirl.create(:recipe, user: user) }
+        before do
+          sign_in correct_user_recipe.user, no_capybara: true 
+          delete recipe_path(some_user_recipe)
+        end
+          specify { expect(response).to redirect_to(root_path) }
       end
     end
     

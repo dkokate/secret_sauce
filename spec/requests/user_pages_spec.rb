@@ -43,10 +43,19 @@ describe "User pages" do
   
   describe "profile page" do
     let(:user) {FactoryGirl.create(:user)}
+    let!(:r1) { FactoryGirl.create(:recipe, user: user, name: "Foo") }
+    let!(:r2) { FactoryGirl.create(:recipe, user: user, name: "Bar") }
+    
     before { visit user_path(user) }
     
     it {should have_content(user.name)}
     it {should have_title(user.name)}
+    
+    describe "recipes" do
+      it {should have_content(r1.name) }
+      it {should have_content(r2.name) }
+      it {should have_content(user.recipes.count) }
+    end
   end
   
   describe "signup page" do
@@ -110,7 +119,7 @@ describe "User pages" do
           sign_in user 
           visit signup_path
         end
-        it { should have_selector('h1', text: "Secret Sauce") } 
+        it { should have_selector('h3', text: "Recipe Feed") } # Home page for signed user shows Recipe Feed
         it { should_not have_title("Sign up") }
       end
       describe "attempting to submit a User#create action" do

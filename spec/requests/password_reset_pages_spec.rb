@@ -8,8 +8,8 @@ describe "Password reset request and Reset password" do
     describe "password reset request page" do
       before { visit password_reset_path }
     
-      it {should have_selector('h1', text: 'Password Reset request')} 
-      it {should have_title(full_title('Password reset request'))}
+      it {should have_selector('h1', text: 'Password Reset request') } 
+      it {should have_title(full_title('Password reset request')) }
     end
   
     describe "password reset request process" do

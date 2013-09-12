@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :recipes, dependent: :destroy
+  
   before_save {self.email = email.downcase}
   before_create :create_remember_token
   
@@ -29,6 +31,10 @@ class User < ActiveRecord::Base
     begin
         self[column] = SecureRandom.urlsafe_base64
       end while User.exists?(column => self[column])
+  end
+  
+  def feed
+    Recipe.where("user_id = ?", id)
   end
   
   private 

@@ -9,4 +9,10 @@ FactoryGirl.define do
       admin true
     end
   end
+  
+  factory :recipe do
+    name "Secret Sauce"
+    instructions "Abraca dabra"
+    user
+  end
 end

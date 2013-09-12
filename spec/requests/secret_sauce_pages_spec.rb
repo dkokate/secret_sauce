@@ -54,6 +54,23 @@ describe "Secret Sauce pages" do
       it { should have_link('Sign out',   href: signout_path) }
     end
     
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user)}
+      before do 
+        FactoryGirl.create(:recipe, name: "Secret-Sauce 1", instructions: "Lorem ipsum", user: user)
+        FactoryGirl.create(:recipe, name: "Secret-Sauce 2", instructions: "Dolor sit amet", user: user)
+        sign_in user
+        visit root_path
+      end
+      
+      it "should render the list of user's recipes" do
+        user.feed.each do |item|
+          expect(page).to have_selector("li##{item.id}", text: item.name)
+        end
+      end
+      
+    end
+    
   end
   
   describe "Help page" do

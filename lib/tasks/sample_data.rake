@@ -19,5 +19,13 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+    users = User.all(limit: 6)
+    50.times do |n|
+      # name = Faker::Lorem.sentence(2)
+      # instructions = Faker::Lorem.sentence(3)
+      name = "Secret Sauce-#{n}"
+      instructions = "Abra-#{n} Dabra Mumbra-#{n}"
+      users.each { |user| user.recipes.create!(name: name, instructions: instructions) }
+    end
   end
 end

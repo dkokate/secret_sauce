@@ -1,9 +1,23 @@
-<div class="center hero-unit">
-  <h1>Secret Sauce</h1>
-  <h2>Come in and enjoy our <a href="#">Secret Sauce!</a></h2>
-  <% unless signed_in? %>
-    <%= link_to "Sign Up now!", signup_path, class: "btn btn-large btn-primary"%>
-  <% end %>
-</div>
+<% if signed_in? %>
+  <div class="row">
+    <aside class="span4">
+      <section>
+        <%= render 'shared/user_info'%>
+      </section>
+    </aside>
+    <div class="span8">
+      <h3>Recipe Feed</h3>
+      <%= render 'shared/feed' %>
+    </div>
+  </div>
+<% else%>
+  <div class="center hero-unit">
+    <h1>Secret Sauce</h1>
+    <h2>Come in and enjoy our <a href="#">Secret Sauce!</a></h2>
+    <% unless signed_in? %>
+      <%= link_to "Sign Up now!", signup_path, class: "btn btn-large btn-primary"%>
+    <% end %>
+  </div>
 
-<%= link_to image_tag("secret_sauce.jpg", alt: "Secret Sauce"), '#'%>  <!-- "http://placehold.it/150x150" --> 
+  <%= link_to image_tag("secret_sauce.jpg", alt: "Secret Sauce"), '#'%>  <!-- "http://placehold.it/150x150" --> 
+<% end %>

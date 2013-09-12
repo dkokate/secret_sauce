@@ -14,6 +14,8 @@ describe User do
   it {should respond_to(:remember_token)}
   it {should respond_to(:authenticate)}
   it {should respond_to(:admin)}
+  it { should respond_to(:recipes) }
+  it { should respond_to(:feed) }
   
   it {should be_valid}
   it {should_not be_admin}
@@ -114,6 +116,32 @@ describe User do
   describe "remember token" do
     before {@user.save}
     its(:remember_token) {should_not be_blank}
+  end
+  
+  describe "recipe associations" do
+    before { @user.save }
+    let!(:older_recipe) { FactoryGirl.create(:recipe, user: @user, created_at: 1.day.ago) }
+    let!(:newer_recipe) { FactoryGirl.create(:recipe, user: @user, created_at: 1.hour.ago) }
+
+    it "should have the right recipes in the right order" do
+      expect(@user.recipes.to_a).to eq [newer_recipe, older_recipe]
+    end
+    
+    it "should destroy associated recipes" do
+      recipes = @user.recipes.to_a
+      @user.destroy
+      expect(recipes).not_to be_empty
+      recipes.each do |recipe|
+        expect { Recipe.find(recipe) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    describe "status" do
+      let(:unfollowed_recipe) { FactoryGirl.create(:recipe, user: FactoryGirl.create(:user)) }
+      
+      its(:feed) { should include(newer_recipe) }
+      its(:feed) { should include(older_recipe) }
+      its(:feed) { should_not include(unfollowed_recipe) }
+    end
   end
 
 end

@@ -18,6 +18,7 @@ SecretSauce::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy]
   
   
   # The priority is based upon order of creation: first created -> highest priority.
