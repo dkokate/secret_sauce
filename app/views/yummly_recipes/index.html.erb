@@ -1,0 +1,6 @@
+<% provide(:title, "Secret recipes") %>
+<h1> Secret Recipes </h1>
+
+<ul class="users">
+  <%= render partial: 'yummly_recipe', collection: @yummly_recipes %>
+</ul>

@@ -1,4 +1,6 @@
 module ApplicationHelper
+require 'nokogiri' 
+require 'open-uri' 
   
   # Returns the full title on per-page basis
   def full_title(page_title)

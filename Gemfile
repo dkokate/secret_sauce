@@ -9,6 +9,8 @@ gem 'faker', '1.2.0'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', :git => 'git://github.com/yrgoldteeth/bootstrap-will_paginate.git'
 gem 'figaro'     # for setting ENV variables. After 'bundle install' do 'rails generate figaro:install'
+gem 'faraday', '0.8.8'
+gem "nokogiri", "1.6.0"
 
 
 group :development, :test do

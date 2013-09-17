@@ -1,0 +1,10 @@
+<% doc = Nokogiri::HTML(open("#{@yummly_recipe_detail.sourceRecipeUrl}")) %>
+<% directions_count = 0 %>
+<ul>
+  <% doc.css(@selector).each do |instruction| %>
+   <li>
+     <%= instruction.content %>
+     <% @directions_count += 1  %>
+   </li>
+  <% end %>
+</ul>

@@ -222,3 +222,157 @@ aside {
     margin-bottom: 5px;
   }
 }
+
+/* recipe detail */
+.recipe_detail {
+	li {
+	  overflow: auto;
+	  font-size: 1.1em;
+	  padding: 5px 0;
+	}
+	h1 {
+	  font-size: 2em;
+	  letter-spacing: 0px;
+	  margin-bottom: 5px;
+	  text-align: center;
+	}
+
+	h2 {
+	  font-size: 1.5em;
+	  letter-spacing: 0.5px;
+	  margin-bottom: 20px;
+	  text-align: center;
+	  font-weight: normal;
+	  color: $gray;
+	}
+}
+
+/* recipe detail instructions */
+.recipe_detail {
+	li {
+	  overflow: auto;
+	  font-size: 1.1em;
+	  padding: 5px 0;
+	}
+}
+/* nutritional facts */
+.image {
+  width: 250px;
+  float: left;
+  margin: 20px;
+}
+body {
+  font-size: small;
+  line-height: 1.4;
+}
+p {
+  margin: 0;
+}
+
+.performance-facts {
+  border: 1px solid black;
+  margin: 5px;
+  float: left;
+  width: 280px;
+  padding: 0.5rem;
+  table {
+    border-collapse: collapse;
+  }
+}
+.performance-facts__title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: normal;
+  margin: 0 0 0.25rem 0;
+}
+
+.performance-facts__header {
+  border-bottom: 8px solid black;
+  padding: 0 0 0.25rem 0;
+  margin: 0 0 0.25rem 0;
+  p {
+    margin: 0;
+  }
+}
+.performance-facts__table {
+  width: 100%;
+  thead tr {
+    th, td {
+      border: 0;
+    }
+  }
+  th, td {
+    font-weight: normal;
+    text-align: left;
+    padding: 0.25rem 0;
+    border-top: 1px solid black; 
+    white-space: nowrap;
+  }
+  td {
+    &:last-child {
+      text-align: right;
+    }
+  }
+  .blank-cell {
+    width: 1rem;
+    border-top: 0;
+  }
+  .thick-row {
+    th, td {
+      border-top-width: 5px;
+    }
+  }
+}
+.performance-facts__subtitle {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.small-info {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.performance-facts__table--small {
+  @extend .performance-facts__table;
+  border-bottom: 1px solid #999;
+  margin: 0 0 0.5rem 0;
+  thead {
+    tr {
+      border-bottom: 1px solid black; 
+    }
+  }
+  td {
+    &:last-child {
+      text-align: left;
+    }
+  }
+  th, td {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.performance-facts__table--grid {
+  @extend .performance-facts__table;
+  margin: 0 0 0.5rem 0;
+  td {
+    &:last-child {
+      text-align: left;
+      &::before {
+        content: "•";
+        font-weight: bold;
+        margin: 0 0.25rem 0 0;
+      }
+    }
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+.thick-end {
+  border-bottom: 8px solid black;
+}
+.thin-end {
+  border-bottom: 1px solid black;
+}

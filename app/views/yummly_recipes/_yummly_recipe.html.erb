@@ -1,0 +1,15 @@
+<li>
+  <div class="row offset1">
+    <div class="span1"><%= link_to image_tag(yummly_recipe['smallImageUrls'].first, alt: "Recipe Image"), controller: "yummly_recipes", action: "show", id: yummly_recipe['id'] %></div>
+    <div class="span4">
+      <strong><%= link_to yummly_recipe['recipeName'], controller: "yummly_recipes", action: "show", id: yummly_recipe['id'] %></strong>
+      <br>
+      <i class="icon-time icon-black"></i>
+      <%= distance_of_time_in_words(yummly_recipe['totalTimeInSeconds'].to_f) %>
+    </div>
+    <div class="span4">
+      <strong>Ingredients: </strong><%= yummly_recipe['ingredients'].to_sentence %>
+      <br><%= "From: #{yummly_recipe['sourceDisplayName']}'s kitchen" %>
+      </div>
+  </div>
+</li>

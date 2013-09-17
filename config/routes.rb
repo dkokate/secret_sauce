@@ -1,4 +1,6 @@
 SecretSauce::Application.routes.draw do
+
+  match '/yummly_recipe', to: 'yummly_recipes#new', via: 'get'
   match '/password_reset', to: 'password_resets#new', via: 'get'
   
   match '/signup', to: 'users#new', via: 'get'
@@ -19,6 +21,7 @@ SecretSauce::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :yummly_recipes, only: [:new, :index, :show]
   
   
   # The priority is based upon order of creation: first created -> highest priority.

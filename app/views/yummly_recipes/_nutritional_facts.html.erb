@@ -1,0 +1,310 @@
+<section class="performance-facts">
+  <header class="performance-facts__header">
+    <h1 class="performance-facts__title">Nutrition Facts</h1>
+  </header>
+  <table class="performance-facts__table">
+    <thead>
+      <tr>
+        <th colspan="3" class="performance-facts__subtitle">
+          Amount Per Serving
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <b>Calories</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:enerc_kcal].blank? %>
+            <%= ((@yummly_recipe_detail.nutritionEstimates[:enerc_kcal][:value] / 5.0).round * 5) %>
+           <% end %>
+        </th>
+        <td>
+          Calories from Fat
+          <% unless @yummly_recipe_detail.nutritionEstimates[:fat_kcal].blank? %>
+            <%= ((@yummly_recipe_detail.nutritionEstimates[:fat_kcal][:value] / 5.0 ).round * 5) %>
+          <% end %>
+        </td>
+      </tr>
+      <tr class="thick-row">
+        <td colspan="3" class="small-info">
+          <b>% Daily Value*</b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Total Fat</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:fat].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fat][:value].round %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fat][:unit] %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:fat][:unit].eql? "g" %>
+              <% total_fat_percent = (@yummly_recipe_detail.nutritionEstimates[:fat][:value] * 100 / 65).round%>
+            <% end %>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{total_fat_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Saturated Fat
+          <% unless @yummly_recipe_detail.nutritionEstimates[:fasat].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fasat][:value].round(1) %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fasat][:unit] %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:fasat][:unit].eql? "g" %>
+              <% fatsat_percent = (@yummly_recipe_detail.nutritionEstimates[:fasat][:value] * 100 / 20).round%>
+            <% end %>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{fatsat_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Trans Fat
+          <% unless @yummly_recipe_detail.nutritionEstimates[:fatrn].blank? %>
+             <%= @yummly_recipe_detail.nutritionEstimates[:fatrn][:value].round %>
+             <%= @yummly_recipe_detail.nutritionEstimates[:fatrn][:unit] %>
+          <% end %>
+        </th>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Cholesterol</b>
+            <% unless @yummly_recipe_detail.nutritionEstimates[:chole].blank? %>
+              <% if @yummly_recipe_detail.nutritionEstimates[:chole][:unit].eql? "g" %>
+                <%= (@yummly_recipe_detail.nutritionEstimates[:chole][:value]*1000).round %>
+                <%= "mg" %>
+                <% chole_percent = (@yummly_recipe_detail.nutritionEstimates[:chole][:value] * 1000 * 100 / 300).round%>
+              <% else %>
+                <%= @yummly_recipe_detail.nutritionEstimates[:chole][:value].round %>
+                <%= @yummly_recipe_detail.nutritionEstimates[:chole][:unit] %>
+              <% end %>
+           <% end %>
+        </th>
+        <td>
+          <b><%= "#{chole_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Sodium</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:na].blank? %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:na][:unit].eql? "g" %>
+                <%= (@yummly_recipe_detail.nutritionEstimates[:na][:value]*1000).round %>
+                <%= "mg" %>
+                <% na_percent = (@yummly_recipe_detail.nutritionEstimates[:na][:value] * 1000 * 100 / 2400).round%>
+             <% else %>
+                <%= @yummly_recipe_detail.nutritionEstimates[:na][:value].round %>
+                <%= @yummly_recipe_detail.nutritionEstimates[:na][:unit] %>
+            <% end %>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{na_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Potassium</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:k].blank? %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:k][:unit].eql? "g" %>
+              <%= (@yummly_recipe_detail.nutritionEstimates[:k][:value]*1000).round %>
+              <%= "mg" %>
+              <% k_percent = (@yummly_recipe_detail.nutritionEstimates[:k][:value] * 1000 * 100 / 3500).round%>
+            <% else %>
+              <%= (@yummly_recipe_detail.nutritionEstimates[:k][:value]).round %>
+              <%= @yummly_recipe_detail.nutritionEstimates[:k][:unit] %>
+            <% end %>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{k_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">
+          <b>Total Carbohydrate</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:chocdf].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:chocdf][:value].round %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:chocdf][:unit] %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:chocdf][:unit].eql? "g" %>
+              <% chocdf_percent = (@yummly_recipe_detail.nutritionEstimates[:chocdf][:value] * 100 / 300 ).round%>
+            <% end %>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{chocdf_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Dietary Fiber
+          <% unless @yummly_recipe_detail.nutritionEstimates[:fibtg].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fibtg][:value].round %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:fibtg][:unit] %>
+          <% end %>
+          <% if (!@yummly_recipe_detail.nutritionEstimates[:fibtg].blank? && 
+                @yummly_recipe_detail.nutritionEstimates[:fibtg][:unit].eql?("g")) %>
+            <% fibtg_percent = (@yummly_recipe_detail.nutritionEstimates[:fibtg][:value] * 100 / 25 ).round%>
+          <% end %>
+        </th>
+        <td>
+          <b><%= "#{fibtg_percent}%" %></b>
+        </td>
+      </tr>
+      <tr>
+        <td class="blank-cell">
+        </td>
+        <th>
+          Sugars
+          <% unless @yummly_recipe_detail.nutritionEstimates[:sugar].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:sugar][:value].round %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:sugar][:unit] %>
+          <% end %>
+        </th>
+        <td>
+        </td>
+      </tr>
+      <tr class="thick-end">
+        <th colspan="2">
+          <b>Protein</b>
+          <% unless @yummly_recipe_detail.nutritionEstimates[:procnt].blank? %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:procnt][:value].round %>
+            <%= @yummly_recipe_detail.nutritionEstimates[:procnt][:unit] %>
+          <% end %>
+        </th>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="performance-facts__table--grid">
+    <tbody>
+      <tr>
+        <td colspan="2">
+          Vitamin A
+          <% unless @yummly_recipe_detail.nutritionEstimates[:vita_iu].blank? %>
+            <% vita_iu_percent = (@yummly_recipe_detail.nutritionEstimates[:vita_iu][:value] * 100 / 5000 ).round%>
+          <% end %>
+          <%= "#{vita_iu_percent}%" %>
+        </td>
+        <td>
+          Vitamin C
+          <% unless @yummly_recipe_detail.nutritionEstimates[:vitc].blank? %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:vitc][:unit].eql? "g" %>
+              <% vitc_percent = (@yummly_recipe_detail.nutritionEstimates[:vitc][:value] * 1000 * 100 / 60 ).round%>
+             <% elsif @yummly_recipe_detail.nutritionEstimates[:vitc][:unit].eql? "mg"%>
+               <% vitc_percent = (@yummly_recipe_detail.nutritionEstimates[:vitc][:value] * 100 / 60 ).round%>
+             <% else %>
+               <% vitc_percent = nil %>
+             <% end %>
+          <% end %>
+          <%= "#{vitc_percent}%" %>
+        </td>
+      </tr>
+      <tr class="thin-end">
+        <td colspan="2">
+          Calcium
+          <% unless @yummly_recipe_detail.nutritionEstimates[:ca].blank? %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:ca][:unit].eql? "g" %>
+              <% ca_percent = (@yummly_recipe_detail.nutritionEstimates[:ca][:value] * 1000 * 100 / 1000 ).round%>
+             <% elsif @yummly_recipe_detail.nutritionEstimates[:ca][:unit].eql? "mg"%>
+               <% ca_percent = (@yummly_recipe_detail.nutritionEstimates[:ca][:value] * 100 / 1000 ).round%>
+             <% else %>
+               <% ca_percent = nil %>
+             <% end %>
+          <% end %>
+          <%= "#{ca_percent}%" %>
+        </td>
+        <td>
+          Iron<% unless @yummly_recipe_detail.nutritionEstimates[:fe].blank? %>
+            <% if @yummly_recipe_detail.nutritionEstimates[:fe][:unit].eql? "g" %>
+              <% fe_percent = (@yummly_recipe_detail.nutritionEstimates[:fe][:value] * 1000 * 100 / 18 ).round%>
+             <% elsif @yummly_recipe_detail.nutritionEstimates[:fe][:unit].eql? "mg"%>
+               <% fe_percent = (@yummly_recipe_detail.nutritionEstimates[:fe][:value] * 100 / 18 ).round%>
+             <% else %>
+               <% fe_percent = nil %>
+             <% end %>
+          <% end %>
+          <%= "#{fe_percent}%" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="small-info">* Percent Daily Values are based on a 2,000 calorie diet. Your daily values may be higher or lower depending on your calorie needs.</p>
+
+  <!--
+  <table class="performance-facts__table--small small-info">
+    <thead>
+      <tr>
+        <td colspan="2"></td>
+        <th>Calories:</th>
+        <th>2,000</th>
+        <th>2,500</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="2">Total Fat</th>
+        <td>Less than</td>
+        <td>65g</td>
+        <td>80g</td>
+      </tr>
+      <tr>
+        <td class="blank-cell"></td>
+        <th>Saturated Fat</th>
+        <td>Less than</td>
+        <td>20g</td>
+        <td>25g</td>
+      </tr>
+      <tr>
+        <th colspan="2">Cholesterol</th>
+        <td>Less than</td>
+        <td>300mg</td>
+        <td>300 mg</td>
+      </tr>
+      <tr>
+        <th colspan="2">Sodium</th>
+        <td>Less than</td>
+        <td>2,400mg</td>
+        <td>2,400mg</td>
+      </tr>
+      <tr>
+        <th colspan="3">Total Carbohydrate</th>
+        <td>300g</td>
+        <td>375g</td>
+      </tr>
+      <tr>
+        <td class="blank-cell"></td>
+        <th colspan="2">Dietary Fiber</th>
+        <td>25g</td>
+        <td>30g</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="small-info">
+    Calories per gram:
+  </p>
+  <p class="small-info text-center">
+    Fat 9
+    &bull;
+    Carbohydrate 4
+    &bull;
+    Protein 4
+  </p>
+  -->
+
+</section>

@@ -1,0 +1,52 @@
+<%=provide(:title,'Secret recipe details')%>
+
+<div class="row recipe_detail">
+  <aside class="span4">
+    <section>
+      <%= image_tag(@yummly_recipe_detail.smallImageUrl, alt: "Recipe Image") %>
+
+    </section>
+  </aside>
+  <div class="span8">
+      <h1><%= @yummly_recipe_detail.name %></h1>
+      <p class="center">
+        <i class="icon-time icon-black"></i>&nbsp
+        <%= distance_of_time_in_words(@yummly_recipe_detail.totalTimeInSeconds.to_f) %>
+        | <i class= "icon-user icon-black"></i>&nbsp<%= @yummly_recipe_detail.numberOfServings.to_f.round %>&nbsp  servings
+        <% unless @yummly_recipe_detail.calories.blank? %>
+          | <i class="icon-fire icon-black"></i>&nbsp<%=  (@yummly_recipe_detail.calories.to_f / 5.0).round * 5   %>&nbsp  calories 
+        <% end %>
+      </p>    
+   </div>
+</div>
+<div class="row recipe_detail">
+ <div class="span4">
+   <h2></h2>
+   <div class="thumbnail"><%=  image_tag(@yummly_recipe_detail.largeImageUrl, alt: "Recipe Image") %> </div>
+ </div>
+ <div class="span4">
+   <h2>Ingredients</h2>
+   <ul>
+     <% @yummly_recipe_detail.ingredientLines.each do |ingredient_line| %>
+       <li>
+        <%= ingredient_line %> 
+       </li>
+      <% end %>
+   </ul> 
+   <%= render 'nutritional_facts' unless @yummly_recipe_detail.calories.blank? %>
+ </div>
+ <div class="span4">
+   <h2>Directions</h2>
+   <% @directions_count = 0 %>
+   <% if directions_available_for?(@yummly_recipe_detail.sourceSiteUrl) %>
+     <%= render 'directions', directions_count: @directions_count %>
+   <% end %>
+   <% if @directions_count == 0 %>
+     <br><p><%= link_to("Check at: #{@yummly_recipe_detail.sourceSiteUrl}", 
+                 "#{@yummly_recipe_detail.sourceRecipeUrl}", class: "btn btn-large btn-primary") %></p>
+   <% end %>
+ </div>
+</div>
+
+
+
