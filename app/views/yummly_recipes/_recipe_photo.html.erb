@@ -1,0 +1,8 @@
+<div id="recipe_photo">
+  <div class="thumbnail">
+    <%=  image_tag((@yummly_recipe_detail.largeImageUrl || "http://placehold.it/370x250"), alt: "Recipe Image") %>
+  </div>
+  <% if !@yummly_recipe_detail.calories.blank? %>
+    <br><%= link_to("Nutrition Facts", "#", class: "btn btn-small btn-info", id: "replace_with_nutrition_facts", remote: true) %>
+  <% end %>
+</div>

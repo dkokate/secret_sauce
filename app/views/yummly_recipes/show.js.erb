@@ -1,0 +1,15 @@
+$( document ).ready(function() {
+  console.log( 'ready!' );
+});
+
+$("#replace_with_nutrition_facts").click(function() {
+     $("#recipe_photo").replaceWith("<%= escape_javascript(render('nutrition_facts')) %>");
+     console.log('clicked');
+});
+
+$("#replace_with_recipe_photo").click(function() {
+     $("#nutrition_facts").replaceWith("<%= escape_javascript(render('recipe_photo')) %>");
+     console.log('clicked');
+});
+
+

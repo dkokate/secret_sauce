@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # Sign in the user & redirect to show page
       sign_in(user, options = { :remember_me => params[:remember_me] })
-      redirect_back_or user
+      redirect_back_or root_url
+      #redirect_back_or user
     else
       # Create error message
       # Since render 'new' does not count as a new request,

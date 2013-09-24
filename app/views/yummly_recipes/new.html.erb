@@ -2,13 +2,76 @@
 <h1>Search for Secret Recipes</h1>
 
 <div class="row">
-  <div class="span6 offset2">
-    <%= simple_form_for(:yummly_recipe, :url => url_for(:controller => 'yummly_recipes', :action => 'index'),
+  <div class="span6 offset3 well">
+    <%= form_for(:yummly_recipe, :url => url_for(:controller => 'yummly_recipes', :action => 'index'),
         :method => 'get', :html => { :class => 'form-horizontal' }) do |f| %>
-      
-      <%= f.input :containing %>	
+        
+        <div class="control-group">
+          <%= f.label :containing, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :containing, placeholder: "Key words (separated by comma)" %> 
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :ingredients_included, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :ingredients_included, placeholder: "Recipes must contain" %> 
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :ingredients_excluded, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :ingredients_excluded, placeholder: "Recipes must NOT contain" %> 
+          </div>
+        </div>
+        
 
-      <%= f.button :submit, "Search", class: " offset3 input-prepend add-on btn btn-large btn-primary" %>
+        <div class="control-group">
+          <%= f.label :max_total_time_hr, "Max Total Time", class: "control-label" %>
+          <div class="controls">
+            <div class="input-prepend">
+              <span class="add-on">Hr</span>
+              <%= f.select :max_total_time_hr,   [1, 2, 3, 4, 5, 6, 7, 8], include_blank: true, class:  "span2" %>
+            </div>
+            <div class="input-prepend">
+              <span class="add-on">Min</span>
+              <%= f.select :max_total_time_min,   [15, 30, 45], include_blank: true, class: "span1" %>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :allowed_allergy, "Allergy", class: "control-label" %>
+          <div class="controls">
+            <% allergy_array =  [ ["Wheat","392^Wheat-Free"],
+                                  ["Gluten","393^Gluten-Free"],
+                                  ["Peanut","394^Peanut-Free"],
+                                  ["Tree nut","395^TreeNut-Free"], 
+                                  ["Dairy","396^Dairy-Free"],
+                                  ["Eggs","397^Egg-Free"],
+                                  ["Seafood","398^Seafood-Free"],
+                                  ["Sesame","399^Sesame-Free"],
+                                  ["Soy","400^Soy-Free"],
+                                  ["Sulfite","401^Sulfite-Free"]
+                                ] %>
+            <%= f.select :allowed_allergy, options_for_select(allergy_array), { :prompt => "Please select"},
+                                      { :multiple => true, :size => 4, :include_blank => true } %>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :max_calories, class: "control-label" %>
+          <div class="controls">
+            <%= f.text_field :max_calories, class: "span2" %> 
+          </div>
+        </div>
+
+        
+        <div class="form-actions">
+            <%= f.submit "Search", class: "btn btn-primary" %>
+            <%= f.button "Cancel", name: 'Cancel', class: "btn" %>
+        </div>
       
     <% end %>
   </div>

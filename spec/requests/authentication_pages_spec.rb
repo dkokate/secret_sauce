@@ -38,7 +38,8 @@ describe "Authentication" do
       # end
       
       # pending(": valid info example not ready")
-      it { should have_title(user.name) }
+      # it { should have_title(user.name) }   # User Profile Page
+      it {should have_title(full_title(''))}  # Home Page
       it { should have_link('Recipes',  '#') }
       it { should have_link("Gotu's",  href: users_path) }
       it { should have_link('Profile',     href: user_path(user)) }

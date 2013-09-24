@@ -2,12 +2,12 @@
   <div class="row">
     <aside class="span4">
       <section>
-        <%= render 'shared/user_info'%>
-        <br><p><%= link_to "Search Recipes", yummly_recipe_path, class: "btn btn-large btn-primary"%></p>
+        <%= render 'shared/user_info' %>
+        <%= render 'shared/quick_search' %>
       </section>
     </aside>
     <div class="span8">
-      <h3>Recipe Feed</h3>
+      <h3 class="text-center">Recipe Feed</h3>
       <%= render 'shared/feed' %>
     </div>
   </div>

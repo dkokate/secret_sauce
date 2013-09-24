@@ -3,8 +3,9 @@
 <div class="row recipe_detail">
   <aside class="span4">
     <section>
-      <%= image_tag(@yummly_recipe_detail.smallImageUrl, alt: "Recipe Image") %>
-
+        <%= image_tag((@yummly_recipe_detail.smallImageUrl || "http://placehold.it/90x60"), 
+                alt: "Recipe Image") %>
+        <strong>&nbsp<%= @yummly_recipe_detail.sourceDisplayName %></strong>
     </section>
   </aside>
   <div class="span8">
@@ -20,32 +21,40 @@
    </div>
 </div>
 <div class="row recipe_detail">
- <div class="span4">
+  <div class="span4">
    <h2></h2>
-   <div class="thumbnail"><%=  image_tag(@yummly_recipe_detail.largeImageUrl, alt: "Recipe Image") %> </div>
- </div>
- <div class="span4">
-   <h2>Ingredients</h2>
-   <ul>
-     <% @yummly_recipe_detail.ingredientLines.each do |ingredient_line| %>
-       <li>
-        <%= ingredient_line %> 
-       </li>
-      <% end %>
-   </ul> 
-   <%= render 'nutritional_facts' unless @yummly_recipe_detail.calories.blank? %>
- </div>
- <div class="span4">
-   <h2>Directions</h2>
-   <% @directions_count = 0 %>
-   <% if directions_available_for?(@yummly_recipe_detail.sourceSiteUrl) %>
-     <%= render 'directions', directions_count: @directions_count %>
-   <% end %>
-   <% if @directions_count == 0 %>
-     <br><p><%= link_to("Check at: #{@yummly_recipe_detail.sourceSiteUrl}", 
-                 "#{@yummly_recipe_detail.sourceRecipeUrl}", class: "btn btn-large btn-primary") %></p>
-   <% end %>
- </div>
+    <%= render 'recipe_photo' %>
+  </div>
+  <script>
+    $("#replace_with_nutrition_facts").click(function() {
+         $("#recipe_photo").replaceWith("<%= escape_javascript(render('nutrition_facts')) %>");
+         console.log('clicked');
+    });
+  </script>
+  <div class="span4">
+     <h2>Ingredients</h2>
+     <ul>
+       <% @yummly_recipe_detail.ingredientLines.each do |ingredient_line| %>
+         <li>
+          <%= ingredient_line %> 
+         </li>
+        <% end %>
+     </ul> 
+  </div>
+  <div class="span4">
+     <h2>Directions</h2>
+     <% @directions_count = 0 %>
+     <% if directions_available_for?(@yummly_recipe_detail.sourceSiteUrl) %>
+       <%= render 'directions', directions_count: @directions_count %>
+     <% end %>
+     <% if @directions_count > 0 %>
+        <br><div class="center"><p><%= link_to("More info @ #{@yummly_recipe_detail.sourceDisplayName}", 
+                    "#{@yummly_recipe_detail.sourceRecipeUrl}", class: "btn btn-small btn-info") %></p></div>
+     <% else %>
+       <br><div class="center"><p><%= link_to("Directions @ #{@yummly_recipe_detail.sourceDisplayName}", 
+                   "#{@yummly_recipe_detail.sourceRecipeUrl}", class: "btn btn-primary") %></p></div>
+     <% end %>
+  </div>
 </div>
 
 

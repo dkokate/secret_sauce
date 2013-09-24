@@ -18,8 +18,28 @@ class YummlyRecipeStore
       req.url '/v1/api/recipes'
       req.headers['X-Yummly-App-ID'] = ENV["YUMMLY_ID"]
       req.headers['X-Yummly-App-Key'] = ENV["YUMMLY_KEY"]
-      req.params['q'] = options
-      req.params['maxResult'] = 30
+      puts "Options: #{options}"
+      req.params['q'] = options[:containing]
+      
+      #if !options[:ingredients_included].blank?
+      #  options[:ingredients_included].split( /, */ ).each do |ingredient|
+      #    puts ingredient
+      #    req.params['allowedIngredient'] = ingredient
+      #  end
+      #end
+      req.params['allowedIngredient'] = options[:ingredients_included].split( /, */ ) unless options[:ingredients_included].blank?
+      # req.params['allowedIngredient'] = options[:ingredients_included] unless options[:ingredients_included].blank?
+      
+      req.params['excludedIngredient'] = options[:ingredients_excluded].split( /, */ ) unless options[:ingredients_excluded].blank?
+      unless (options[:max_total_time_hr].blank? && options[:max_total_time_min].blank?)
+        req.params['maxTotalTimeInSeconds'] = ((options[:max_total_time_hr] || 0).to_f * 60 * 60).round  +
+                                              ((options[:max_total_time_min]).to_f * 60).round + 60
+      end
+      
+      req.params['nutrition.ENERC_KCAL.min'] = 1 unless options[:max_calories].blank?
+      req.params['nutrition.ENERC_KCAL.max'] = (options[:max_calories]).to_f.round unless options[:max_calories].blank?
+      req.params['allowedAllergy'] = options[:allowed_allergy] unless options[:allowed_allergy].blank?
+      req.params['maxResult'] = 100
     end
     # puts "response body:  #{response.body}"
     # response.body

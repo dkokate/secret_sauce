@@ -2,9 +2,22 @@
   
   attr_accessor :ingredientLines, :flavors, :nutritionEstimates, :nutritionEstimates, :largeImageUrl, :smallImageUrl, 
                 :name, :yield, :totalTime, :attributes, :totalTimeInSeconds, :rating, :numberOfServings, :source, :id,
-                :nutritionEstimates, :calories, :sourceRecipeUrl, :sourceDisplayName, :sourceSiteUrl
+                :nutritionEstimates, :calories, :sourceRecipeUrl, :sourceDisplayName, :sourceSiteUrl, 
+                :attribution_html, :attribution_url, :attribution_text, :attribution_logo
   
   def initialize(attributes={})
+    @attribution_html = attributes["attribution"]["html"]
+    @attribution_url = attributes["attribution"]["url"]
+    @attribution_text = attributes["attribution"]["text"]
+    @attribution_logo = attributes["attribution"]["logo"]
+    
+    @source = {}
+    @source = attributes["source"]
+    @sourceRecipeUrl = self.source["sourceRecipeUrl"]
+    @sourceSiteUrl = self.source["sourceSiteUrl"]
+    @sourceDisplayName = self.source["sourceDisplayName"]
+    
+    
     @ingredientLines     = attributes["ingredientLines"]
     @flavors = attributes["flavors"]
     @nutritionEstimates = attributes["nutritionEstimates"]
@@ -17,8 +30,6 @@
     @totalTimeInSeconds = attributes["totalTimeInSeconds"]
     @rating = attributes["rating"]
     @numberOfServings = attributes["numberOfServings"]
-    @source = {}
-    @source = attributes["source"]
     @id = attributes["id"]
     
     @nutritionEstimates = {}
@@ -54,9 +65,6 @@
     end 
     
     @calories = self.nutritionEstimates[:enerc_kcal][:value] unless self.nutritionEstimates[:enerc_kcal].blank?
-    @sourceRecipeUrl = self.source["sourceRecipeUrl"]
-    @sourceSiteUrl = self.source["sourceSiteUrl"]
-    @sourceDisplayName = self.source["sourceDisplayName"]
     
     
     # @smallImageUrls = attributes[:smallImageUrls]

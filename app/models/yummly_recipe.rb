@@ -1,7 +1,7 @@
  class YummlyRecipe
   
   attr_accessor :id, :course, :flavors, :rating, :smallImageUrls, :sourceDisplayName, :totalTimeInSeconds, 
-                :ingredients, :recipeName, :sourceDisplayName
+                :ingredients, :recipeName, :sourceDisplayName, :criteria
   
   def initialize(attributes={})
     @id     = attributes[:id]
@@ -13,5 +13,6 @@
     @ingredients = attributes[:ingredients]
     @recipeName = attributes[:recipeName]
     @sourceDisplayName = attributes[:sourceDisplayName]
+    @criteria = attributes[:criteria]
   end
 end
