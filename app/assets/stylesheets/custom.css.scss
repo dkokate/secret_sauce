@@ -149,6 +149,9 @@ aside {
 }
 
 /* forms */
+.form-horizontal {
+	margin-bottom: 0;
+}
 
 input, textarea, .uneditable-input {
   border: 1px solid #bbb;
@@ -178,6 +181,11 @@ input {
 .field_with_errors {
   @extend .control-group;
   @extend .error;
+}
+
+.form-actions {
+	margin-bottom: 5px;
+	margin-top: 5px;
 }
 
 /* Simple Form */

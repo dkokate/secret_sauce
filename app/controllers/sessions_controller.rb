@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  
+  before_filter :check_for_cancel, :only => [:create]
+  
   def new
   end
   
@@ -23,4 +26,11 @@ class SessionsController < ApplicationController
     sign_out
     redirect_to root_url
   end
+  
+  def check_for_cancel
+    if params['Cancel'] 
+      redirect_back_or root_url
+    end
+  end
+  
 end
