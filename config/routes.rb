@@ -17,11 +17,16 @@ SecretSauce::Application.routes.draw do
   match '/about', to: 'secret_sauce_pages#about', via: 'get'
   match '/contact', to: 'secret_sauce_pages#contact', via: 'get'
   
-  resources :users
+  resources :users do
+    member do
+    get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy]
   resources :yummly_recipes, only: [:new, :index, :show]
+  resources :relationships, only: [:create, :destroy]
   
   
   # The priority is based upon order of creation: first created -> highest priority.

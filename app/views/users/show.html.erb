@@ -7,14 +7,18 @@
         <%= @user.name %>
       </h1>
     </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
   </aside>
   <div class="span8">
-     <% if @user.recipes.any? %>
-       <h3>Recipes (<%= @user.recipes.count %>)</h3>
+    <%= render 'follow_form' if signed_in? %>
+    <% if @user.recipes.any? %>
+     <h3>Recipes (<%= @user.recipes.count %>)</h3>
        <ol class="recipes">
-         <%= render @recipes %>
+        <%= render @recipes %>
        </ol>
-       <%= will_paginate @recipes %>
+      <%= will_paginate @recipes %>
      <% end %>
    </div>
 </div>
