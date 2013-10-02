@@ -21,6 +21,10 @@ class YummlyRecipeStore
       puts "Options: #{options}"
       req.params['q'] = options[:containing]
       
+      req.params['allowedCourse'] = options[:allowed_course] unless options[:allowed_course].blank?
+      
+      req.params['allowedCuisine'] = options[:allowed_cuisine] unless options[:allowed_cuisine].blank?
+      
       #if !options[:ingredients_included].blank?
       #  options[:ingredients_included].split( /, */ ).each do |ingredient|
       #    puts ingredient

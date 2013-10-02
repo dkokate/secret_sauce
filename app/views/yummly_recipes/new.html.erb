@@ -27,7 +27,6 @@
           </div>
         </div>
         
-
         <div class="control-group">
           <%= f.label :max_total_time_hr, "Max Total Time", class: "control-label" %>
           <div class="controls">
@@ -41,24 +40,6 @@
             </div>
           </div>
         </div>
-        <div class="control-group">
-          <%= f.label :allowed_allergy, "Allergy", class: "control-label" %>
-          <div class="controls">
-            <% allergy_array =  [ ["Wheat","392^Wheat-Free"],
-                                  ["Gluten","393^Gluten-Free"],
-                                  ["Peanut","394^Peanut-Free"],
-                                  ["Tree nut","395^TreeNut-Free"], 
-                                  ["Dairy","396^Dairy-Free"],
-                                  ["Eggs","397^Egg-Free"],
-                                  ["Seafood","398^Seafood-Free"],
-                                  ["Sesame","399^Sesame-Free"],
-                                  ["Soy","400^Soy-Free"],
-                                  ["Sulfite","401^Sulfite-Free"]
-                                ] %>
-            <%= f.select :allowed_allergy, options_for_select(allergy_array), { :prompt => "Please select"},
-                                      { :multiple => true, :size => 4, :include_blank => true } %>
-          </div>
-        </div>
         
         <div class="control-group">
           <%= f.label :max_calories, class: "control-label" %>
@@ -66,6 +47,87 @@
             <%= f.text_field :max_calories, class: "span2" %> 
           </div>
         </div>
+
+        <div class="control-group">
+          <%= f.label :allowed_course, "Courses", class: "control-label" %>
+          <div class="controls">
+            <% course_array =  [   
+                                  ["Soups","course^course-Soups"],
+                                  ["Salads","course^course-Salads"],
+                                  ["Main Dishes","course^course-Main Dishes"],
+                                  ["Side Dishes","course^course-Side Dishes"],
+                                  ["Lunch and Snacks","course^course-Lunch and Snacks"], 
+                                  ["Desserts","course^course-Desserts"],
+                                  ["Breakfast and Brunch","course^course-Breakfast and Brunch"],
+                                  ["Appetizers","course^course-Appetizers"],
+                                  ["Breads","course^course-Breads"],
+                                  ["Beverages","course^course-Beverages"],
+                                  ["Condiments and Sauces","course^course-Condiments and Sauces"],
+                                  ["Cocktails","course^course-Cocktails"],
+                                  ["Beverages","course^course-Beverages"]
+                                ] %>
+            <%= f.select :allowed_course, options_for_select(course_array), { :prompt => "Please select"},
+                                      { :multiple => true, :size => 4, :include_blank => true } %>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :allowed_cuisine, "Cuisine", class: "control-label" %>
+          <div class="controls">
+            <% cuisine_array =  [ 
+                                  ["Italian","cuisine^cuisine-italian"],
+                                  ["American","cuisine^cuisine-american"],
+                                  ["Asian","cuisine^cuisine-asian"],
+                                  ["Chinese","cuisine^cuisine-chinese"],
+                                  ["Japanese","cuisine^cuisine-japanese"],
+                                  ["Thai","cuisine^cuisine-thai"],
+                                  ["Indian","cuisine^cuisine-indian"],
+                                  ["Mexican","cuisine^cuisine-mexican"],
+                                  ["Barbecue","cuisine^cuisine-barbecue-bbq"],
+                                  ["Cajun & Creole","cuisine^cuisine-cajun"],
+                                  ["Mediterranean","cuisine^cuisine-mediterranean"],
+                                  ["Greek","cuisine^cuisine-greek"], 
+                                  ["French","cuisine^cuisine-french"],
+                                  ["English","cuisine^cuisine-english"],
+                                  ["Spanish","cuisine^cuisine-spanish"],
+                                  ["German","cuisine^cuisine-german"],
+                                  ["Moroccan","cuisine^cuisine-moroccan"],
+                                  ["Irish","cuisine^cuisine-irish"],
+                                  ["Cuban","cuisine^cuisine-cuban"],
+                                  ["Hawaiian","cuisine^cuisine-hawaiian"],
+                                  ["Swedish","cuisine^cuisine-swedish"],
+                                  ["Hungarian","cuisine^cuisine-hungarian"],
+                                  ["Portuguese","cuisine^cuisine-portuguese"],
+                                  ["Southern & Soul Food","cuisine^cuisine-southern"],
+                                  ["Southwestern","cuisine^cuisine-southwestern"]
+                                ] %>
+            <%= f.select :allowed_cuisine, options_for_select(cuisine_array), { :prompt => "Please select"},
+                                      { :multiple => true, :size => 4, :include_blank => true } %>
+          </div>
+        </div>
+        
+
+        <div class="control-group">
+          <%= f.label :allowed_allergy, "Allergy", class: "control-label" %>
+          <div class="controls">
+            <% allergy_array =  [ 
+                                  ["Peanut","394^Peanut-Free"],
+                                  ["Tree nut","395^TreeNut-Free"], 
+                                  ["Sesame","399^Sesame-Free"],
+                                  ["Dairy","396^Dairy-Free"],
+                                  ["Eggs","397^Egg-Free"],
+                                  ["Seafood","398^Seafood-Free"],
+                                  ["Soy","400^Soy-Free"],
+                                  ["Gluten","393^Gluten-Free"],
+                                  ["Wheat","392^Wheat-Free"],
+                                  ["Sulfite","401^Sulfite-Free"]
+                                ] %>
+            <%= f.select :allowed_allergy, options_for_select(allergy_array), { :prompt => "Please select"},
+                                      { :multiple => true, :size => 4, :include_blank => true } %>
+          </div>
+        </div>
+        
+
 
         
         <div class="form-actions">
