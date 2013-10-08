@@ -24,6 +24,9 @@ describe User do
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
   
+  
+  it { should respond_to(:platters) }
+  
   it {should be_valid}
   it {should_not be_admin}
   
@@ -188,6 +191,26 @@ describe User do
       
       it { should_not be_following(other_user) }
       its(:followed_users) { should_not include(other_user) }
+    end
+  end
+  
+  describe "platter associations" do
+    before { @user.save }
+    let!(:older_platter) { FactoryGirl.create(:platter, user: @user, created_at: 1.day.ago) }
+    let!(:newer_platter) { FactoryGirl.create(:platter, user: @user, created_at: 1.hour.ago) }
+
+    it "should have the right platters in the right order" do
+      expect(@user.platters.to_a).to eq [newer_platter, older_platter]
+    end
+    
+    it "should destroy associated platters" do
+      platters = @user.platters.to_a # to_a is important
+      # without to_a, destroying the user would destroy the list in the platters variable
+      @user.destroy
+      expect(platters).not_to be_empty # safety check in case the 'to_a' gets accidentally deleted
+      platters.each do |platter|
+        expect { Platter.find(platter) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 

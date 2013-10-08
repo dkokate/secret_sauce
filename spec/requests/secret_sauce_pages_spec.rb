@@ -47,7 +47,7 @@ describe "Secret Sauce pages" do
       
       it { should_not have_link('Sign Up now!') }
       it { should_not have_link('Sign in') }
-      it { should have_link('Recipes',  '#') }
+      it { should have_link('Platters', href: user_path(user)) }
       it { should have_link("Gotu's",  href: users_path) }
       it { should have_link('Profile',     href: user_path(user)) }
       it { should have_link('Settings',    href: edit_user_path(user)) }

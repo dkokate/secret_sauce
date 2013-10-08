@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130930054932) do
+ActiveRecord::Schema.define(version: 20131008065401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "platters", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "platters", ["user_id", "created_at"], name: "index_platters_on_user_id_and_created_at", using: :btree
 
   create_table "recipes", force: true do |t|
     t.string   "name"
@@ -37,6 +46,29 @@ ActiveRecord::Schema.define(version: 20130930054932) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "selections", force: true do |t|
+    t.integer  "platter_id"
+    t.integer  "source_recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "selections", ["platter_id", "source_recipe_id"], name: "index_selections_on_platter_id_and_source_recipe_id", unique: true, using: :btree
+  add_index "selections", ["platter_id"], name: "index_selections_on_platter_id", using: :btree
+  add_index "selections", ["source_recipe_id"], name: "index_selections_on_source_recipe_id", using: :btree
+
+  create_table "source_recipes", force: true do |t|
+    t.string   "source"
+    t.string   "recipe_ref"
+    t.string   "name"
+    t.text     "ingredients"
+    t.integer  "total_time_in_seconds"
+    t.string   "small_image_url"
+    t.string   "source_display_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

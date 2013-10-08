@@ -43,18 +43,26 @@ describe "User pages" do
   
   describe "profile page" do
     let(:user) {FactoryGirl.create(:user)}
-    let!(:r1) { FactoryGirl.create(:recipe, user: user, name: "Foo") }
-    let!(:r2) { FactoryGirl.create(:recipe, user: user, name: "Bar") }
+    # >> let!(:r1) { FactoryGirl.create(:recipe, user: user, name: "Foo") }
+    # >> let!(:r2) { FactoryGirl.create(:recipe, user: user, name: "Bar") }
+    let!(:p1) { FactoryGirl.create(:platter, user: user, name: "Platter-1") }
+    let!(:p2) { FactoryGirl.create(:platter, user: user, name: "Platter-2") }
     
     before { visit user_path(user) }
     
     it {should have_content(user.name)}
     it {should have_title(user.name)}
     
-    describe "recipes" do
-      it {should have_content(r1.name) }
-      it {should have_content(r2.name) }
-      it {should have_content(user.recipes.count) }
+    # >> describe "recipes" do
+    # >>   it {should have_content(r1.name) }
+    # >>   it {should have_content(r2.name) }
+    # >>   it {should have_content(user.recipes.count) }
+    # >> end
+    
+    describe "platters" do
+      it {should have_content(p1.name) }
+      it {should have_content(p2.name) }
+      it {should have_content(user.platters.count) }
     end
     
     describe "follow/unfollow buttons" do
@@ -154,7 +162,7 @@ describe "User pages" do
         
         it {should have_selector('div.alert.alert-success', text: 'Enjoy')} 
         
-        it { should have_link('Recipes',  '#') }
+        it { should have_link('Platters', href: user_path(user)) }
         it { should have_link("Gotu's",  href: users_path) }
         it { should have_link('Profile',     href: user_path(user)) }
         it { should have_link('Settings',    href: edit_user_path(user)) }

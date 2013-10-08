@@ -40,7 +40,7 @@ describe "Authentication" do
       # pending(": valid info example not ready")
       # it { should have_title(user.name) }   # User Profile Page
       it {should have_title(full_title(''))}  # Home Page
-      it { should have_link('Recipes',  '#') }
+      it { should have_link('Platters',  href: user_path(user)) }
       it { should have_link("Gotu's",  href: users_path) }
       it { should have_link('Profile',     href: user_path(user)) }
       it { should have_link('Settings',    href: edit_user_path(user)) }
@@ -129,6 +129,38 @@ describe "Authentication" do
         end
         describe "submiiting to the destroy action" do
           before { delete recipe_path(FactoryGirl.create(:recipe)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+      
+      
+      describe "in Platters controller" do
+        describe "submitting to the create action" do
+          before { post platters_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submiiting to the update action" do
+          let(:platter) { FactoryGirl.create(:platter) }
+          before do 
+            platter.name = "New Platter"
+            patch platter_path(platter) 
+          end
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+        describe "submiiting to the destroy action" do
+          before { delete platter_path(FactoryGirl.create(:platter)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+      
+      describe "in Selections controller" do
+        describe "submitting to the create action" do
+          before { post selections_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submiiting to the destroy action" do
+          before { delete selection_path(FactoryGirl.create(:selection)) }
           specify { expect(response).to redirect_to(signin_path) }
         end
       end

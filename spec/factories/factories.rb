@@ -15,4 +15,27 @@ FactoryGirl.define do
     instructions "Abraca dabra"
     user
   end
+  
+  factory :platter do
+    name "My Platter"
+    user
+  end
+  
+  factory :source_recipe do
+    recipe_ref "Bacon-Wrapped-Corn-Martha-Stewart-197182"
+    name "Bacon-Wrapped Corn"
+    ingredients "bacon, coarse salt, cayenne pepper, corn"
+    small_image_url "http://yummly-recipeimages-compressed.s3.amazonaws.com/Bacon-Wrapped-Corn-Martha-Stewart-197182-112683.s.png"
+    total_time_in_seconds 1500
+    source_display_name "Martha Stewart"
+    source ENV["SOURCE_YUMMLY"]
+  end
+  
+  factory :selection do
+    platter
+    source_recipe
+  end
 end
+
+# Cranberry-orange-spiced-green-beans-299022
+# Cranberry-orange Spiced Green Beans

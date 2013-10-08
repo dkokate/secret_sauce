@@ -5,21 +5,40 @@
       <h1>
         <%= gravatar_for @user%>
         <%= @user.name %>
+        <%= render 'follow_form' if signed_in? %>
       </h1>
     </section>
     <section>
       <%= render 'shared/stats' %>
+    </section> 
+    <section>
+      <%= render 'shared/quick_search' %>
+    </section> 
+    <section>
+      <% if current_user?(@user) %>
+        <%= render 'shared/create_platter' %>
+      <% end %>
     </section>
   </aside>
   <div class="span8">
-    <%= render 'follow_form' if signed_in? %>
+    <!-- 
+    ========== Recipes rendering has been taken out =========
     <% if @user.recipes.any? %>
      <h3>Recipes (<%= @user.recipes.count %>)</h3>
        <ol class="recipes">
-        <%= render @recipes %>
+        <%# >>= render @recipes %>
        </ol>
-      <%= will_paginate @recipes %>
-     <% end %>
-   </div>
+      <%# >>= will_paginate @recipes %>
+    <% end %>
+    ==========================================================
+    -->
+    <% if @user.platters.any? %>
+     <h3>Platters (<%= @user.platters.count %>)</h3>
+       <ol class="platters">
+        <%= render @platters %>
+       </ol>
+      <%= will_paginate @platters %>
+    <% end %>
+  </div>
 </div>
 

@@ -16,6 +16,22 @@
         | <i class= "icon-user icon-black"></i>&nbsp<%= @yummly_recipe_detail.numberOfServings.to_f.round %>&nbsp  servings
         <% unless @yummly_recipe_detail.calories.blank? %>
           | <i class="icon-fire icon-black"></i>&nbsp<%=  (@yummly_recipe_detail.calories.to_f / 5.0).round * 5   %>&nbsp  calories 
+          
+          <!-- Button to trigger modal -->
+          <% counter = 0 %>
+          <a href="#myModal" role="button" class="btn" data-toggle="modal" data-target=<%="#myModal-#{counter}"%>>Add to Platter</a>
+          <!-- selection_counter is used to identify the target div element whose id is dynamically generated in add_to_platter partial-->
+          <%= render partial: 'shared/add_to_platter', 
+                  locals: { recipe_ref: @yummly_recipe_detail.id, 
+                            recipe_name: @yummly_recipe_detail.name, 
+                            ingredients:       @yummly_recipe_detail.ingredientLines.to_sentence,
+                            small_image_url:      @yummly_recipe_detail.smallImageUrl,
+                            total_time_in_seconds: @yummly_recipe_detail.totalTimeInSeconds.to_i,
+                            source_display_name:  @yummly_recipe_detail.sourceDisplayName,
+                            source: ENV["SOURCE_YUMMLY"], 
+                            modal_counter: counter } %>
+          <!-- modal_counter is used to dynamically generate the id of target div element in add_to_platter partial -->
+
         <% end %>
       </p>    
    </div>

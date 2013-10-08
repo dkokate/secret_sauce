@@ -1,3 +1,4 @@
+
 <li>
   <div class="row offset1">
     <div class="span1"><%= link_to image_tag((yummly_recipe['smallImageUrls'].first || "http://placehold.it/70x70"), alt: "Recipe Image"), controller: "yummly_recipes", action: "show", id: yummly_recipe['id'] %></div>
@@ -5,11 +6,28 @@
       <strong><%= link_to yummly_recipe['recipeName'], controller: "yummly_recipes", action: "show", id: yummly_recipe['id'] %></strong>
       <br>
       <i class="icon-time icon-black"></i>
-      <%= distance_of_time_in_words(yummly_recipe['totalTimeInSeconds'].to_f) %>
+      <%= distance_of_time_in_words(yummly_recipe['totalTimeInSeconds'].to_i) %>
+      
+      <br>
+      <!-- Button to trigger modal -->
+      <a href="#myModal" role="button" class="btn" data-toggle="modal" data-target=<%="#myModal-#{yummly_recipe_counter}"%>>Add to Platter</a>
+      <!-- yummly_recipe_counter is used to identify the target div element whose id is dynamically generated in add_to_platter partial-->
+      <%= render partial: 'shared/add_to_platter', 
+          locals: {recipe_ref: yummly_recipe['id'], 
+          recipe_name: yummly_recipe['recipeName'], 
+          ingredients: yummly_recipe['ingredients'].to_sentence,
+          small_image_url: yummly_recipe['smallImageUrls'].first,
+          total_time_in_seconds: yummly_recipe['totalTimeInSeconds'].to_i,
+          source_display_name: yummly_recipe['sourceDisplayName'],
+          source: ENV["SOURCE_YUMMLY"], 
+          modal_counter: yummly_recipe_counter } %>
+      <!-- modal_counter is used to dynamically generate the id of target div element in add_to_platter partial -->
+      
     </div>
     <div class="span4">
       <strong>Ingredients: </strong><%= yummly_recipe['ingredients'].to_sentence %>
       <br><%= "From: #{yummly_recipe['sourceDisplayName']}'s kitchen" %>
-      </div>
+    </div>
   </div>
 </li>
+

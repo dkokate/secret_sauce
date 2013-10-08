@@ -25,8 +25,10 @@ SecretSauce::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy]
+  resources :platters, only: [:show, :create, :edit, :update, :destroy]
   resources :yummly_recipes, only: [:new, :index, :show]
   resources :relationships, only: [:create, :destroy]
+  resources :selections, only: [:create, :destroy]
   
   
   # The priority is based upon order of creation: first created -> highest priority.

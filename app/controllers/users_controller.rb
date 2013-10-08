@@ -9,7 +9,10 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @recipes = @user.recipes.paginate(page: params[:page])
+    # >> @recipes = @user.recipes.paginate(page: params[:page])
+    @platters = @user.platters.paginate(page: params[:page])
+    store_location
+    @platter = current_user.platters.build if signed_in?
   end
   
   def new
