@@ -1,0 +1,33 @@
+<li>
+  <div class="row offset1">
+    <div class="span1"><%= link_to image_tag((selection.source_recipe.small_image_url || "http://placehold.it/70x70"), 
+          alt: "Recipe Image"), controller: "yummly_recipes", action: "show", id: selection.source_recipe.recipe_ref %></div>
+    <div class="span4">
+      <strong><%= link_to selection.source_recipe.name, controller: "yummly_recipes", action: "show", 
+                  id: selection.source_recipe.recipe_ref %></strong>
+      <br>
+      <i class="icon-time icon-black"></i>
+      <%= distance_of_time_in_words(selection.source_recipe.total_time_in_seconds) %>
+                  
+      <br>
+      <!-- Button to trigger modal -->
+      <a href="#myModal" role="button" class="btn" data-toggle="modal" data-target=<%="#myModal-#{selection_counter}"%>>Add to Platter</a>
+      <!-- selection_counter is used to identify the target div element whose id is dynamically generated in add_to_platter partial-->
+      <%= render partial: 'shared/add_to_platter', 
+              locals: { recipe_ref:  selection.source_recipe.recipe_ref, 
+                        recipe_name: selection.source_recipe.name,
+                        ingredients:        selection.source_recipe.ingredients,
+                        small_image_url:      selection.source_recipe.small_image_url,
+                        total_time_in_seconds: selection.source_recipe.total_time_in_seconds,
+                        source_display_name:  selection.source_recipe.source_display_name, 
+                        source:             ENV["SOURCE_YUMMLY"], 
+                        modal_counter: selection_counter } %>
+      <!-- modal_counter is used to dynamically generate the id of target div element in add_to_platter partial -->
+      
+    </div>
+    <div class="span4">
+      <strong>Ingredients: </strong><%= selection.source_recipe.ingredients %>
+      <br><%= "From: #{selection.source_recipe.source_display_name}'s kitchen" %>
+    </div>
+  </div>
+</li>

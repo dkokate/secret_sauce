@@ -1,0 +1,13 @@
+<%= form_for(@platter, :html => { :class => 'well form-inline' }) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="control-group">
+    <div class="controls field">
+      <%= f.text_field :name, placeholder: "New Platter Name", required: true %>
+    </div>  
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Create", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

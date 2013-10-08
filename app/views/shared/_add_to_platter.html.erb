@@ -1,0 +1,70 @@
+<!-- Modal -->
+<div id=<%="myModal-#{modal_counter}"%> class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Select a Platter</h3> <%= "for #{recipe_name}" %>
+  </div>
+  <div class="modal-body">
+    <%= form_for(:selection, :url => url_for(:controller => 'selections', :action => 'create'),
+        :method => 'post', :html => { :class => 'form-horizontal add_to_platter'  }) do |f| %>
+    
+      <div><%= f.hidden_field :recipe_ref, value: recipe_ref %></div>
+      <div><%= f.hidden_field :recipe_name, value: recipe_name %></div>
+      
+      <div><%= f.hidden_field :ingredients, value: ingredients %></div>
+      <div><%= f.hidden_field :small_image_url, value: small_image_url %></div>
+      <div><%= f.hidden_field :total_time_in_seconds, value: total_time_in_seconds %></div>
+      <div><%= f.hidden_field :source_display_name, value: source_display_name %></div>
+      
+      <div><%= f.hidden_field :source, value: source %></div>
+        
+        <div class="control-group">
+          <div class="field span3">
+            <%= f.text_field :platter_name, id: "platterNameFieldId-#{modal_counter}", placeholder: "New Platter name" %>
+          </div>
+          <%= f.submit "Create", id: "createPlatterButtonId-#{modal_counter}", class: "btn btn-primary", disabled: true %>
+        </div>
+        
+        <div class="center">
+          <%= f.select :platter_id, options_from_collection_for_select(current_user.platters, :id, :name),  { :prompt => "Please select"},
+            { :multiple => false, :required => true, :size => 5, :include_blank => false, :class => "select1", 
+              :id => "platterNameSelectId-#{modal_counter}" } %>
+        </div>
+        <br>
+
+      <div class="modal-footer center">
+        <%= f.submit "Add", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+  
+  <!-- 
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+  -->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js">  </script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+
+    if($('#platterNameFieldId-<%="#{modal_counter}"%>').val() ===  ""){
+         $('#platterNameSelectId-<%="#{modal_counter}"%>').attr('disabled', false);
+         $('#platterNameSelectId-<%="#{modal_counter}"%>').prop('required', true);
+         $('#createPlatterButtonId-<%="#{modal_counter}"%>').attr('disabled', true);
+         } 
+    $('#platterNameFieldId-<%="#{modal_counter}"%>').keyup(function(){
+        if($('#platterNameFieldId-<%="#{modal_counter}"%>').val() !==  "") {
+             $('#platterNameSelectId-<%="#{modal_counter}"%>').attr('disabled', true);
+             $('#platterNameSelectId-<%="#{modal_counter}"%>').prop('required', false);
+             $('#createPlatterButtonId-<%="#{modal_counter}"%>').attr('disabled', false);
+             }  
+        else {
+           $('#platterNameSelectId-<%="#{modal_counter}"%>').attr('disabled', false); 
+           $('#platterNameSelectId-<%="#{modal_counter}"%>').prop('required', true);
+           $('#createPlatterButtonId-<%="#{modal_counter}"%>').attr('disabled', true);
+           } 
+    });
+  });
+  </script>
+</div> 

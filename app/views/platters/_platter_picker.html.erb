@@ -1,0 +1,17 @@
+<li>
+  <span class="content"><%= platter.name %></span>
+</li>
+
+<%= form_for(@platter, :html => { :class => 'form-inline' }) do |f| %>
+  <div class="control-group">
+    <%= f.label :containing, "Search recipes containing", class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :containing, placeholder: "Key words (separated by comma)" %> 
+    </div>
+  </div>  
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Add", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
