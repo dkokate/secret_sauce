@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   # 'source: :follower' is not reqd becasue Rails will automatically pluralize follower to followers unlike followed_users
   
   has_many :platters, dependent: :destroy
+  has_many :interests, dependent: :destroy
   
   before_save {self.email = email.downcase}
   before_create :create_remember_token
@@ -56,6 +57,26 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     self.relationships.find_by(followed_id: other_user.id).destroy!
   end
+  
+  # --------------------------------------------------------------
+  def platter_feed
+    Platter.from_platters_followed_by(self)
+  end
+  
+  def following_platter?(platter)
+    self.interests.find_by(platter_id: platter.id)
+  end
+  
+  def follow_platter!(platter)
+    self.interests.create!(platter_id: platter.id)
+    pl = Platter.find(platter.id)
+    pl.update(last_platter_activity_at: DateTime.now.utc)
+  end
+  
+  def unfollow_platter!(platter)
+    self.interests.find_by(platter_id: platter.id).destroy!
+  end
+  # --------------------------------------------------------------
   
   private 
     def  create_remember_token

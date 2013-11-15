@@ -35,7 +35,9 @@ FactoryGirl.define do
     platter
     source_recipe
   end
+  
+  factory :interest do
+    platter
+    user
+  end
 end
-
-# Cranberry-orange-spiced-green-beans-299022
-# Cranberry-orange Spiced Green Beans

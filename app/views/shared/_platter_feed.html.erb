@@ -1,0 +1,6 @@
+<% if @platter_feed_items.any? %>
+  <ol class="platters">
+    <%= render partial: 'shared/platter_feed_item', collection: @platter_feed_items %>
+  </ol>
+  <%= will_paginate @platter_feed_items %>
+<% end %>

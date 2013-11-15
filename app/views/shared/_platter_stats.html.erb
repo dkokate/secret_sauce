@@ -1,0 +1,9 @@
+<% @user ||= current_user %>
+<div class="platter_stats">
+  <a href="<%= following_platter_path(@user) %>">
+    <strong id="following_platters" class="stat"><%= Platter.platters_followed_by(@user).count %></strong> following
+  </a>
+  <a href="<%= followed_platter_path(@user) %>">
+    <strong id="followed_platters" class="stat"><%= Platter.followed_platters_of(@user).count %></strong> followed
+  </a>
+</div>

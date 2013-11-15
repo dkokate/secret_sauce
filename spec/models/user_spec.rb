@@ -23,9 +23,12 @@ describe User do
   it { should respond_to(:unfollow!) }
   it { should respond_to(:reverse_relationships) }
   it { should respond_to(:followers) }
-  
+  it { should respond_to(:password_reset_token) }
+  it { should respond_to(:password_reset_sent_at) }
   
   it { should respond_to(:platters) }
+  it { should respond_to(:interests) }
+  it { should respond_to(:platter_feed) }
   
   it {should be_valid}
   it {should_not be_admin}
@@ -212,6 +215,61 @@ describe User do
         expect { Platter.find(platter) }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
+  end
+  
+  describe "interest associations" do
+    before { @user.save }
+    let!(:platter_owner) { FactoryGirl.create(:user) }
+    let!(:platter1) { FactoryGirl.create(:platter, user: platter_owner) }
+    let!(:platter2) { FactoryGirl.create(:platter, user: platter_owner) }
+    
+    let!(:source_recipe_1) { FactoryGirl.create(:source_recipe) }
+    let!(:source_recipe_2) { FactoryGirl.create(:source_recipe, recipe_ref: "Beans-1234", name: "Black Beans") }
+    
+    let!(:older_selection) { FactoryGirl.create(:selection, platter: platter1, source_recipe: source_recipe_1, created_at: 1.day.ago) }
+    let!(:latest_selection) { FactoryGirl.create(:selection, platter: platter1, source_recipe: source_recipe_2, created_at: 1.minute.ago) }
+    let!(:newer_selection) { FactoryGirl.create(:selection, platter: platter2, source_recipe: source_recipe_2, created_at: 1.hour.ago) }
+    
+    
+    let!(:interest1) { FactoryGirl.create(:interest, platter: platter1, user: @user) }
+    let!(:interest2) { FactoryGirl.create(:interest, platter: platter2, user: @user) }
+    
+    
+    let!(:user_platter) { FactoryGirl.create(:platter, user: @user, created_at: 2.hours.ago) }
+
+    # it "should have the right platters in the right order" do
+    #   expect(@user.platter_feed.to_a).to eq [latest_selection.platter, user_platter, newer_selection.platter] 
+    #   # 'created_at date' of latest_selection of platter1 overides 'created_at date' of older_selection 
+    # end
+    
+    it "should destroy associated interests" do
+      interests = @user.interests.to_a
+      @user.destroy
+      expect(interests).not_to be_empty
+      interests.each do |interest|
+        expect { Interest.find(interest) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+    
+    describe "status" do
+      let!(:unfollowed_platter) { FactoryGirl.create(:platter, user: platter_owner) }
+      let(:followed_user) { FactoryGirl.create(:user) }
+      # before do
+      #   @user.follow_platter!(followed_user)
+      #   3.times { followed_user.recipes.create!(name: "Secret Sauce", instructions: "Lorem ipsum", total_calories: 10) }
+      # end
+      
+      its(:platter_feed) { should include(user_platter) }
+      its(:platter_feed) { should include(interest1.platter) }
+      its(:platter_feed) { should include(interest2.platter) }
+      its(:platter_feed) { should_not include(unfollowed_platter) }
+      # its(:feed) do
+      #   followed_user.recipes.each do |recipe|
+      #     should include(recipe)
+      #   end
+      # end
+    end
+    
   end
 
 end

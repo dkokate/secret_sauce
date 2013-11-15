@@ -4,13 +4,13 @@ class UsersController < ApplicationController
   before_action :admin_user, only: :destroy
   
   def index
-    @users = User.paginate(page: params[:page], per_page: 30)
+    @users = User.order('name ASC').paginate(page: params[:page], per_page: 30)
   end
   
   def show
     @user = User.find(params[:id])
     # >> @recipes = @user.recipes.paginate(page: params[:page])
-    @platters = @user.platters.paginate(page: params[:page])
+    @platters = @user.platters.order('last_platter_activity_at DESC').paginate(page: params[:page])
     store_location
     @platter = current_user.platters.build if signed_in?
   end

@@ -26,7 +26,7 @@
         </div>
         
         <div class="center">
-          <%= f.select :platter_id, options_from_collection_for_select(current_user.platters, :id, :name),  { :prompt => "Please select"},
+          <%= f.select :platter_id, options_from_collection_for_select(current_user.platters.order('last_platter_activity_at DESC'), :id, :name),  { :prompt => "Please select"},
             { :multiple => false, :required => true, :size => 5, :include_blank => false, :class => "select1", 
               :id => "platterNameSelectId-#{modal_counter}" } %>
         </div>

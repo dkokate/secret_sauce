@@ -1,5 +1,7 @@
 SecretSauce::Application.routes.draw do
 
+  get "interests/create"
+  get "interests/destroy"
   match '/yummly_recipe', to: 'yummly_recipes#new', via: 'get'
   match '/password_reset', to: 'password_resets#new', via: 'get'
   
@@ -25,10 +27,15 @@ SecretSauce::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :recipes, only: [:show, :new, :create, :edit, :update, :destroy]
-  resources :platters, only: [:show, :create, :edit, :update, :destroy]
+  resources :platters, only: [:show, :create, :edit, :update, :destroy] do
+    member do
+    get :following, :followed
+    end
+  end
   resources :yummly_recipes, only: [:new, :index, :show]
   resources :relationships, only: [:create, :destroy]
   resources :selections, only: [:create, :destroy]
+  resources :interests, only: [:create, :destroy]
   
   
   # The priority is based upon order of creation: first created -> highest priority.

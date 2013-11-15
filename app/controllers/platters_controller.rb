@@ -1,6 +1,6 @@
 class PlattersController < ApplicationController
   
-  before_action :signed_in_user, only:[:create, :edit, :update, :destroy]
+  before_action :signed_in_user, only:[:create, :edit, :update, :destroy, :following, :followed]
   before_action :correct_platter_owner, only:[:edit, :update, :destroy]
 
   def show
@@ -32,6 +32,24 @@ class PlattersController < ApplicationController
       render 'edit'
     end
   end
+  
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    # ids_of_following_platters = Platter.platters_followed_by(@user)
+    # @platters = Platter.where(id: ids_of_following_platters).('order by ').paginate(page: params[:page])
+    @platters = Platter.platters_followed_by(@user).paginate(page: params[:page])
+    render 'show_follow_platter'
+  end
+
+  def followed
+    @title = "Followed"
+    @user = User.find(params[:id])
+    ids_of_followed_platters = Platter.followed_platters_of(@user)
+    @platters = Platter.where(id: ids_of_followed_platters).paginate(page: params[:page])
+    render 'show_follow_platter'
+  end
+
 
   def destroy
     @platter.destroy

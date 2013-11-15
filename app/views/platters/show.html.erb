@@ -1,5 +1,6 @@
 <% provide(:title, @platter.name) %>
 <h1><%= @platter.name %></h1>
+<%= render 'follow_platter_form' if signed_in? && !current_user?(@platter.user) %>
 
 <% if @platter.selections.any? %>
   <h3>Recipes (<%= @platter.selections.count %>)</h3>

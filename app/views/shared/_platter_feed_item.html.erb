@@ -1,0 +1,10 @@
+<li id="<%= platter_feed_item.id %>">
+  <%= link_to gravatar_for(platter_feed_item.user), platter_feed_item.user %>
+  <span class="user">
+    <%= link_to platter_feed_item.user.name, platter_feed_item.user%>
+  </span>
+  <span class="content"><%= link_to platter_feed_item.name, platter_feed_item %></span>
+  <span class="timestamp">
+    Updated <%= time_ago_in_words(platter_feed_item.updated_at) %> ago.
+  </span>
+</li>

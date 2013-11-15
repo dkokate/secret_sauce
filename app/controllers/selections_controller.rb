@@ -21,8 +21,10 @@ before_action :signed_in_user, only: [:create, :destroy]
       else      
         @selection = Platter.find(params[:selection][:platter_id]).selections.build(source_recipe_id: @source_recipe.id)
         if @selection.save
-            flash[:success] = "Recipe added to Platter!"
-            redirect_to :back
+          pl = Platter.find(params[:selection][:platter_id])       #Update Platter's last_platter_activity_at field
+          pl.update(last_platter_activity_at: DateTime.now.utc)
+          flash[:success] = "Recipe added to Platter!"
+          redirect_to :back
         else
           flash[:error] = "Recipe NOT added to Platter!"
           redirect_to :back 

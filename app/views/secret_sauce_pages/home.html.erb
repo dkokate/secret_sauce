@@ -4,16 +4,22 @@
       <section>
         <%= render 'shared/user_info' %>
       </section>
+      <!-- We are no longer showing recipe stats
       <section>
-        <%= render 'shared/stats' %>
+        <%#= render 'shared/stats' %>
+      </section>
+      -->
+      <section>
+        <%= render 'shared/platter_stats' %>
       </section>
       <section>
         <%= render 'shared/quick_search' %>
       </section>
     </aside>
     <div class="span8">
-      <h3 class="text-center">Recipe Feed</h3>
-      <%= render 'shared/feed' %>
+      <h3 class="text-center">Platters of Interest</h3>
+      <%= render 'shared/platter_feed' %>
+      <%#= render 'shared/feed' %>
     </div>
   </div>
 <% else%>
