@@ -1,4 +1,5 @@
 <% if @interesting_recipes_feed_items.any? %>
+  <h3 class="text-center">Popular Recipes</h3>
   <ol class="users">
     <%= render partial: 'shared/interesting_recipes_feed_item', collection: @interesting_recipes_feed_items %>
   </ol>
