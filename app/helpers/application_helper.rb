@@ -11,4 +11,5 @@ require 'open-uri'
       "#{base_title} | #{page_title}"
     end
   end
+  
 end

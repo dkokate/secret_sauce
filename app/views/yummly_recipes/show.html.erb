@@ -16,7 +16,8 @@
         | <i class= "icon-user icon-black"></i>&nbsp<%= @yummly_recipe_detail.numberOfServings.to_f.round %>&nbsp  servings
         <% unless @yummly_recipe_detail.calories.blank? %>
           | <i class="icon-fire icon-black"></i>&nbsp<%=  (@yummly_recipe_detail.calories.to_f / 5.0).round * 5   %>&nbsp  calories 
-          
+        
+          <% end %>
           <!-- Button to trigger modal -->
           <% counter = 0 %>
           <a href="#myModal" role="button" class="btn" data-toggle="modal" data-target=<%="#myModal-#{counter}"%>>Add to Platter</a>
@@ -32,7 +33,7 @@
                             modal_counter: counter } %>
           <!-- modal_counter is used to dynamically generate the id of target div element in add_to_platter partial -->
 
-        <% end %>
+        
       </p>    
    </div>
 </div>

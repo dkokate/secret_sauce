@@ -5,7 +5,7 @@ class YummlyRecipesController < ApplicationController
   end
   
   def index
-    # logger.debug "In YummlyRecipesController#index params : #{params}"
+    logger.debug "In YummlyRecipesController#index params : #{params}"
     @yummly_recipes = (YummlyRecipeStore.new).find(params[:yummly_recipe]).paginate page: params[:page], per_page: 10
   end
   

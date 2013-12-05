@@ -1,0 +1,31 @@
+<li>
+  <div class="row offset1">
+    <div class="span1"><%= link_to image_tag((interesting_recipes_feed_item['smallImageUrls'].first || "http://placehold.it/70x70"), alt: "Recipe Image"), controller: "yummly_recipes", action: "show", id: interesting_recipes_feed_item['id'] %></div>
+    <div class="span4">
+      <strong><%= link_to interesting_recipes_feed_item['recipeName'], controller: "yummly_recipes", action: "show", id: interesting_recipes_feed_item['id'] %></strong>
+      <br>
+      <i class="icon-time icon-black"></i>
+      <%= distance_of_time_in_words(interesting_recipes_feed_item['totalTimeInSeconds'].to_i) %>
+      
+      <br>
+      <!-- Button to trigger modal -->
+      <a href="#myModal" role="button" class="btn" data-toggle="modal" data-target=<%="#myModal-#{interesting_recipes_feed_item_counter}"%>>Add to Platter</a>
+      <!-- interesting_recipes_feed_item_counter is used to identify the target div element whose id is dynamically generated in add_to_platter partial-->
+      <%= render partial: 'shared/add_to_platter', 
+          locals: {recipe_ref: interesting_recipes_feed_item['id'], 
+          recipe_name: interesting_recipes_feed_item['recipeName'], 
+          ingredients: interesting_recipes_feed_item['ingredients'].to_sentence,
+          small_image_url: interesting_recipes_feed_item['smallImageUrls'].first,
+          total_time_in_seconds: interesting_recipes_feed_item['totalTimeInSeconds'].to_i,
+          source_display_name: interesting_recipes_feed_item['sourceDisplayName'],
+          source: ENV["SOURCE_YUMMLY"], 
+          modal_counter: interesting_recipes_feed_item_counter } %>
+      <!-- modal_counter is used to dynamically generate the id of target div element in add_to_platter partial -->
+      
+    </div>
+    <div class="span4">
+      <strong>Ingredients: </strong><%= interesting_recipes_feed_item['ingredients'].to_sentence %>
+      <br><%= "From: #{interesting_recipes_feed_item['sourceDisplayName']}'s kitchen" %>
+    </div>
+  </div>
+</li>

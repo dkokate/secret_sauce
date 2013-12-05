@@ -204,7 +204,7 @@ describe "Authentication" do
         end
         it {should_not have_title(full_title('Edit recipe'))}
         it {should_not have_selector('h1', text: 'Edit Recipe')}
-        it { should have_selector('h3', text: "Recipe Feed") } # Home page for signed user shows Recipe Feed
+        it { should have_selector('h3', text: "Platters of Interest") } # Home page for signed user should show Platter Feed
         # it {should have_selector('h1', text: 'Secret Sauce')}   # Chack for root url
         specify { expect(current_path).to eq(root_path) }
         # specify { expect(response).to redirect_to(root_url) } --- Doesn't work

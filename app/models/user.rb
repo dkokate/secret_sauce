@@ -77,7 +77,7 @@ class User < ActiveRecord::Base
     self.interests.find_by(platter_id: platter.id).destroy!
   end
   # --------------------------------------------------------------
-  
+
   private 
     def  create_remember_token
       begin

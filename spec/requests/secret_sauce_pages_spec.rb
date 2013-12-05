@@ -55,7 +55,13 @@ describe "Secret Sauce pages" do
     end
     
     describe "for signed-in users" do
-      let(:user) { FactoryGirl.create(:user)}
+      let(:user) { FactoryGirl.create(:user)}      
+      let(:platter) { FactoryGirl.create(:platter, user: user) }
+      let!(:source_recipe_1) { FactoryGirl.create(:source_recipe) }
+      let!(:source_recipe_2) { FactoryGirl.create(:source_recipe, recipe_ref: "Beans-1234", name: "Black Beans") }
+      let!(:selection1) { FactoryGirl.create(:selection, platter: platter, source_recipe: source_recipe_1) }
+      let!(:selection2) { FactoryGirl.create(:selection, platter: platter, source_recipe: source_recipe_2) }
+      
       before do 
         FactoryGirl.create(:recipe, name: "Secret-Sauce 1", instructions: "Lorem ipsum", user: user)
         FactoryGirl.create(:recipe, name: "Secret-Sauce 2", instructions: "Dolor sit amet", user: user)
@@ -63,22 +69,44 @@ describe "Secret Sauce pages" do
         visit root_path
       end
       
-      it "should render the list of user's recipes" do
-        user.feed.each do |item|
+      # 
+      # it "should render the list of user's recipes" do
+      #   user.feed.each do |item|
+      #     expect(page).to have_selector("li##{item.id}", text: item.name)
+      #   end
+      # end
+      
+      it "should render the list of user's platter feed" do
+        user.platter_feed.each do |item|
           expect(page).to have_selector("li##{item.id}", text: item.name)
         end
       end
       
-      describe "follower/following counts" do
+      describe "platter stats" do
         let(:other_user) { FactoryGirl.create(:user) }
+        let(:other_user_platter) { FactoryGirl.create(:platter, user: other_user) }
         before do
-          other_user.follow!(user)
-          visit root_path
+          other_user.follow_platter!(platter)
         end
-        it { should have_link("0 following", href: following_user_path(user)) }
-        it { should have_link("1 followers", href: followers_user_path(user)) }  
+        describe "followed counts" do
+          before do
+            visit root_path
+          end
+          it { should have_link("0 following", href: following_platter_path(user)) }
+          it { should have_link("1 followed", href: followed_platter_path(user)) }
+        end
+        describe "following counts" do
+          before do
+            sign_in other_user
+            visit root_path
+          end
+          it { should have_link("1 following", href: following_platter_path(other_user)) }
+          it { should have_link("0 followed", href: followed_platter_path(other_user)) }
+        end  
       end
     end 
+    it "should render list of 'interesting' platters" do
+    end
   end
   
   describe "Help page" do

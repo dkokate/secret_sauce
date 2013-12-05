@@ -1,6 +1,27 @@
 <li>
-  <span class="content"><%= link_to platter.name, platter %></span>
+  <span class="content">
+    <% if @title == "Following" %>
+      <%= gravatar_for platter.user %>
+      <%= platter.user.name %> 
+    <% end %>
+    <%= link_to platter.name, platter %>
+    <% if platter.selections.any? %>
+      (<%= platter.selections.count %> recipes) 
+    <% end %>
+  </span>
   <span class="timestamp">
     Plated <%= time_ago_in_words(platter.created_at) %> ago.
+  </span>
+  <span>
+  <% if @title != "Following" %>
+    <% @users = platter.users_following %>
+    <% if @users.any? %>
+      <div class="user_avatars">
+        <% @users.each do |user| %>
+          <%= link_to gravatar_for(user, size: 30), user%>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
   </span>
 </li>
